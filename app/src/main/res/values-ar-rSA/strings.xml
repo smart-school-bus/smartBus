@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الباص الذكي</string>
+    <string name="bStart">ابدا</string>
+    <string name="prompt_username">اسم المستخدم او المعرف :</string>
+    <string name="hint_user">اسم المستخدم او المعرف </string>
+    <string name="prompt_password">كلمة السر  :</string>
+    <string name="hint_password">كلمة السر </string>
+    <string name="action_sign_in">تسجيل الدخول</string>
+    <string name="action_forgot_your_password">نسيان كلمة السر ?</string>
+    <string name="action_sign_in_short">تسجيل الدخول</string>
+    <string name="error_username">اسم المستخدم مطلوب</string>
+    <string name="error_invalid_password">كلمة السر قصيرة</string>
+    <string name="error_incorrect_input">اسم المستخم او كلمة السر خطائة</string>
+    <string name="error_field_required">هذه الحقل مطلوبة</string>
+    <string name="error_database">خطاء في الاتصال بقواعد البيانات</string>
+    <!-- Home Page -->
+    <string name="profile">الصفحة الشخصية</string>
+    <string name="logout">تسجيل الخورج</string>
+    <!--School Administration Home Page-->
+    <string name="student">قائمة طلاب</string>
+    <string name="parent">قائمةاوليا امور</string>
+    <string name="driver">قائمة سائقين</string>
+    <string name="bus">قائمة الباصات</string>
+    <string name="emergency_a">اشعارات الاخطار</string>
+    <string name="complains">شكاوي</string>
+    <string name="setting">ضبط</string>
+    <!--Parent Home Page-->
+    <string name="child">قائمة الابناء</string>
+    <string name="tracing">عرض موقع الباص</string>
+    <string name="notifications">اشعارات</string>
+    <string name="addComplains" >شكاوي</string>
+    <!--Driver Home Page -->
+    <string name="busInfo">معلومات الباص</string>
+    <string name="alert">حالات الطوارى</string>
+
+    <string name="stulevellist">اختار مرحلة الطالب </string>
+    <string name="title_activity_sign_in_page">صفحة تسجيل الدخول</string>
+    <string name="title_activity_home">الرئسية</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_item_list">ItemList</string>
+</resources>

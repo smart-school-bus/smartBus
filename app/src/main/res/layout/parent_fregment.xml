@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:paddingVertical="90dp"
+    android:paddingHorizontal="20dp">
+
+    <Button
+        android:id="@+id/students"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:paddingLeft="30dp"
+        android:background="@drawable/button_f"
+        android:drawableLeft="@drawable/bags"
+        android:text="@string/student"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/bus_location"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:paddingLeft="30dp"
+        android:background="@drawable/button_s"
+        android:drawableLeft="@drawable/ic_action_location"
+        android:text="@string/tracing"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/notifications"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:paddingLeft="40dp"
+        android:background="@drawable/button_f"
+        android:drawableLeft="@drawable/ic_notifications_active"
+        android:text="@string/notifications"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/add_complains"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:paddingLeft="40dp"
+        android:background="@drawable/button_s"
+        android:drawableLeft="@drawable/ic_description"
+        android:text="@string/addComplains"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        />
+
+
+</LinearLayout>

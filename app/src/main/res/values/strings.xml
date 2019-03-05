@@ -1,0 +1,68 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Smart Bus10</string>
+    <string name="bStart" translatable="false">Get Started !</string>
+    <!-- Strings related to login -->
+    <string name="prompt_username">User Name,ID :</string>
+    <string name="hint_user">User Name,ID</string>
+    <string name="prompt_password">Password :</string>
+    <string name="hint_password">Password</string>
+    <string name="action_sign_in">Sign in </string>
+    <string name="action_forgot_your_password">Forgot your password ?</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_username">User Name is required</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_input">This User Name or password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_database">Error connecting to databases</string>
+    <!-- Change Password Page -->
+    <string name="error_input">This User Name is incorrect</string>
+    <string name="b_check">Check username</string>
+    <string name="send_m">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot_message">You will recieve the new password As SMS message to your phone number </string>
+    <!-- Home Page -->
+    <string name="profile">Profile</string>
+    <string name="logout">Log out</string>
+    <!--School Administration Home Page-->
+    <string name="student">Students</string>
+    <string name="parent">Parents</string>
+    <string name="driver">Drivers</string>
+    <string name="bus">Buses</string>
+    <string name="emergency_a">Emergency Alerts</string>
+    <string name="complains">Complaints</string>
+    <string name="setting">Setting</string>
+    <!--Parent Home Page-->
+    <string name="child">Students List</string>
+    <string name="tracing">View Bus Location</string>
+    <string name="notifications">Notifications</string>
+    <string name="addComplains" tools:ignore="ExtraTranslation">Complaints</string>
+    <!--Driver Home Page -->
+    <string name="busInfo">Bus Information</string>
+    <string name="alert">Emergency Alert</string>
+
+    <!--Registration Driver Page -->
+    <string name="f_name">First Name</string>
+    <string name="s_name"> Second Name</string>
+    <string name="l_name">Last Name</string>
+    <string name="ph_num">Phone Number</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="bus_num">Bus ID</string>
+    <string name="create_account">Create Account</string>
+    <!--Registration Parent Page -->
+    <string name="hom_loc">Home Location</string>
+    <!--Registration Student Page -->
+    <string name="st_name">Student Name</string>
+    <string name="tag">Tage</string>
+    <string name="bus_stop">Bus Stop </string>
+
+    <string name="stulevellist">Choose The Student Level: </string>st_name
+    <string name="title_activity_sign_in_page">SignInPage</string>
+    <string name="title_activity_home">Home Page</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_item_list">ItemList</string>
+</resources>

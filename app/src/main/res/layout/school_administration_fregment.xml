@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:paddingVertical="45dp"
+    android:paddingHorizontal="20dp">
+
+        <Button
+            android:id="@+id/students"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="30dp"
+            android:background="@drawable/button_f"
+            android:drawableLeft="@drawable/bags"
+            android:text="@string/student"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="30dp"
+            android:background="@drawable/button_s"
+            android:text="@string/parent"
+            android:drawableLeft="@drawable/parents"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/bus"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="35dp"
+            android:background="@drawable/button_f"
+            android:drawableLeft="@drawable/ic_action_bus"
+            android:text="@string/bus"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+
+        <Button
+            android:id="@+id/drivers"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="35dp"
+            android:background="@drawable/button_s"
+            android:drawableLeft="@drawable/driver"
+            android:text="@string/driver"
+            android:textAlignment="center"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/notification"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="40dp"
+            android:background="@drawable/button_f"
+            android:drawableLeft="@drawable/ic_notifications_active"
+            android:text="@string/notifications"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/complains"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:paddingLeft="40dp"
+            android:background="@drawable/button_s"
+            android:drawableLeft="@drawable/ic_announcement"
+            android:text="@string/complains"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            />
+
+</LinearLayout>
+</ScrollView>
