@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComplaintsActivity">
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorPrimary"
+      android:minHeight="?attr/actionBarSize"
+      app:theme="@style/ThemeOverlay.AppCompat.Dark"
+      tools:ignore="MissingPrefix" />
+
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:layout_marginHorizontal="50dp"
+      android:layout_marginVertical="70dp"
+      android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:text="@string/bus_iD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/busIDT"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/busID"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:text="@string/parentN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/parentNameText"
+        android:visibility="gone"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/parentNameE"
+        android:textColor="@android:color/black"
+        android:visibility="gone"/>
+
+    <TextView
+        android:text="@string/complains"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:lines="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:id="@+id/com" />
+
+    <Button
+        android:id="@+id/addcomplains"
+        android:layout_width="200dp"
+        android:layout_height="@dimen/edit_height"
+        android:layout_marginTop="@dimen/dimension_of_the_limbs_log"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/send"
+        android:textColor="@color/colorButtonText"
+        android:background="@drawable/button_st"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        />
+  </LinearLayout>
+</RelativeLayout>

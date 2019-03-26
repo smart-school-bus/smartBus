@@ -1,31 +1,40 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">Smart Bus10</string>
+    <string name="app_name" translatable="false">Smart Bus</string>
     <string name="bStart" translatable="false">Get Started !</string>
     <!-- Strings related to login -->
-    <string name="prompt_username">User Name,ID :</string>
-    <string name="hint_user">User Name,ID</string>
-    <string name="prompt_password">Password :</string>
+    <string name="prompt_username">Enter ID :</string>
+    <string name="hint_user">Enter ID</string>
+    <string name="prompt_password">Enter Password :</string>
     <string name="hint_password">Password</string>
     <string name="action_sign_in">Sign in </string>
     <string name="action_forgot_your_password">Forgot your password ?</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_username">User Name is required</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_input">This User Name or password is incorrect</string>
+    <string name="error_incorrect_input">This ID or password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_database">Error connecting to databases</string>
+    <string name="log">Logging you in</string>
     <!-- Change Password Page -->
-    <string name="error_input">This User Name is incorrect</string>
-    <string name="b_check">Check username</string>
-    <string name="send_m">Ok</string>
+    <string name="error_input">This ID is incorrect</string>
+    <string name="b_check">Check ID</string>
+    <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
-    <string name="forgot_message">You will recieve the new password As SMS message to your phone number </string>
+    <string name="code">Enter Code</string>
+    <string name="resend">Resend code</string>
+    <string name="b_send_code">Verify Code</string>
+    <string name="n_pass">New Password</string>
+    <string name="v_pass">Verify Password</string>
+    <string name="b_ch_p">Change password</string>
+    <string name="error_match">Password does not match</string>
+    <string name="error_code">enter code</string>
+    <string name="error_math_code">The input code is wrong</string>
     <!-- Home Page -->
     <string name="profile">Profile</string>
     <string name="logout">Log out</string>
     <!--School Administration Home Page-->
     <string name="student">Students</string>
-    <string name="parent">Parents</string>
+    <string name="pa">Parents</string>
     <string name="driver">Drivers</string>
     <string name="bus">Buses</string>
     <string name="emergency_a">Emergency Alerts</string>
@@ -39,6 +48,25 @@
     <!--Driver Home Page -->
     <string name="busInfo">Bus Information</string>
     <string name="alert">Emergency Alert</string>
+    <string name="gps">This application requires GPS to work properly, do you want to enable it?</string>
+    <!--Profile Page -->
+    <string name="edit"> Edit </string>
+    <string name="delete"> Delete </string>
+    <string name="name"> Name </string>
+    <string name="parent_id">Parent ID</string>
+    <string name="bu_id">Bus ID</string>
+    <string name="bus_s_id">BusStop ID</string>
+    <string name="address">Address</string>
+    <string name="ph">Phone</string>
+    <string name="pas"> Password </string>
+    <string name="stuAtt"> Attendance </string>
+    <string name="state">State</string>
+    <string name="hst"> Last updated</string>
+    <string name="showch">Children List</string>
+    <string name="show">Go to</string>
+    <string name="delete_mas">Are you sure you complete the delete</string>
+    <string name="pdelete_mas">Do you want to delete students for this parent?</string>
+
 
     <!--Registration Driver Page -->
     <string name="f_name">First Name</string>
@@ -48,12 +76,60 @@
     <string name="profile_image">Profile Image</string>
     <string name="bus_num">Bus ID</string>
     <string name="create_account">Create Account</string>
+    <string name="driv_mas">Are you sure you do not choose a bus?</string>
+    <string name="driv_exist">This driver is exist in the database</string>
+    <string name="s_drive">The Driver Add Successfully</string>
+    <string name="error_add_drive">The Driver Add Unsuccessfully</string>
+    <string name="error_phone">The phone number form 5xxxxxxxxx</string>
+    <string name="log_info">login information</string>
+    <string name="iD">ID :</string>
+    <string name="passw">Password:</string>
+    <string name="c_p">Current Password</string>
+    <string name="c_p_error">The current password is incorrect</string>
+
+    <string name="n_p">New Password</string>
+    <string name="v_p">Verification Password</string>
+    <string name="p_exist">This parent is exist in the database</string>
+
     <!--Registration Parent Page -->
     <string name="hom_loc">Home Location</string>
+    <string name="patterns">Area, Street Name</string>
     <!--Registration Student Page -->
-    <string name="st_name">Student Name</string>
-    <string name="tag">Tage</string>
-    <string name="bus_stop">Bus Stop </string>
+    <string name="st_level">Level</string>
+    <string name="bus_stop">Bus StopID :</string>
+    <string name="bus_iD">BusID :</string>
+    <string name="parent_name">Parent Name</string>
+    <string name="ins">Save</string>
+    <string name="level">Level</string>
+    <string name="st_exist">This student is exist in the database</string>
+    <string name="su">Successful </string>
+    <string name="unsu">Unsuccessful </string>
+    <string name="p">Processing</string>
+    <string name="tag">Tag</string>
+    <!--Registration Bus Page -->
+    <string name="plate">Plate</string>
+    <string name="driverID">DriverID</string>
+    <string name="bus_ma">Are you sure you do not choose a Driver ?</string>
+    <string name="bus_exist">This bus is exist in the database</string>
+    <!--Registration BusStops Page -->
+    <string name="stop_n">Stop Name</string>
+    <string name="stop_or">Bus Stop Order</string>
+    <string name="location">Loction</string>
+
+
+    <!--Complaints  Page -->
+    <string name="comp">Complaints</string>
+    <string name="send">Send</string>
+    <string name="errorbus">BusID does not exist</string>
+    <string name="driverN">Driver Name</string>
+    <string name="parentN">Parent Name</string>
+    <string name="comp_mass">The complaint is not in the database</string>
+    <string name="comp_error">Error download data</string>
+    <string name="comp_erro">Error upload data</string>
+    <!--Bus Details  Page -->
+    <string name="stuNum">No.Passengers </string>
+    <string name="d_n">Driver Name </string>
+
 
     <string name="stulevellist">Choose The Student Level: </string>st_name
     <string name="title_activity_sign_in_page">SignInPage</string>
@@ -65,4 +141,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_item_list">ItemList</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_bus_details">BusDetailsActivity</string>
+    <string name="r_s">Registered students</string>
+    <string name="b_s">Bus Stops</string>
+    <string name="title_activity_maps_location">Map</string>
+    <string name="title_activity_bus_location_map">Map</string>
 </resources>

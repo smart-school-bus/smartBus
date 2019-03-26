@@ -3,7 +3,7 @@
     <item >
         <layer-list>
             <item android:drawable="@color/colorBackgroundButton" />
-            <item android:left="100dp" android:drawable="@color/colorPrimary" />
+            <item android:left="70dp" android:drawable="@color/colorPrimary" />
         </layer-list>
 
     </item>

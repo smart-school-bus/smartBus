@@ -1,43 +1,58 @@
 package com.project.smartbus10;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student  implements Serializable {
     private String StuID;
-    private String StuFirstName;
-    private String StuLastName;
-    private String StuAttendance;
-    //private String BusID;
-   // private String BusStopID;
+    private String firstName;
+    private String lastName;
+    private boolean stuAttendance;
+    private String tag;
+    private String level ;
+    private Parent parent;
+    private Bus bus;
+    private BusStop busStop;
+    private StudentTimeNote not;
 
 
-    public void setStuID(String stuID) {
-        StuID = stuID;
-    }
 
-    public void setStuFirstName(String stuFirstName) {
-        StuFirstName = stuFirstName;
-    }
+    public void setStuID(String stuID) { StuID = stuID; }
 
-    public void setStuLastName(String stuLastName) {
-        StuLastName = stuLastName;
-    }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public void setStuAttendance(String stuAttendance) {
-        StuAttendance = stuAttendance;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public String getStuID() {
-        return StuID;
-    }
+    public void setStuAttendance(boolean stuAttendance) { this.stuAttendance = stuAttendance; }
 
-    public String getStuFirstName() {
-        return StuFirstName;
-    }
+    public void setLevel(String level) { this.level = level; }
 
-    public String getStuLastName() {
-        return StuLastName;
-    }
+    public void setTag(String tag) { this.tag = tag; }
 
-    public String getStuAttendance() {
-        return StuAttendance;
-    }
+    public void setParent(Parent parent) { this.parent = parent; }
+
+    public void setBus(Bus bus) { this.bus = bus; }
+
+    public void setBusStop(BusStop busStop) { this.busStop = busStop; }
+
+    public void setNot(StudentTimeNote not) { this.not = not; }
+
+    public String getStuID() { return StuID; }
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public boolean getStuAttendance() { return stuAttendance; }
+
+    public String getLevel() { return level; }
+
+    public String getTag() { return tag; }
+
+    public Parent getParent() { return parent; }
+
+    public Bus getBus() { return bus ;}
+
+    public BusStop getBusStop() { return busStop; }
+
+    public StudentTimeNote getNot() { return not; }
 }

@@ -1,82 +1,85 @@
 package com.project.smartbus10;
 
-import android.net.Uri;
-
 import java.io.Serializable;
+import java.util.List;
 
 public class Parent implements Serializable {
-private String PatentID;
-    private String UserName;
-    private String Password;
-    private int Phone;
-    private String FirstName;
-    private String LastName;
-    private float Latitude;
-    private float Longitude;//نتأكد منها
-    private Uri profileImage;
-    //student list
+
+    private String PatentID;
+    private String password;
+    private String phone;
+    private String firstName;
+    private String secondName;
+    private String lastName;
+    private double latitude;
+    private double longitude;
+    private String address;
+    private List<Student> students;
 
     public void setPatentID(String patentID) {
         PatentID = patentID;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
-
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
-    public void setPhone(int phone) {
-        Phone = phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
+
+    public void setSecondName(String secondName) { this.secondName = secondName; }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
-    public void setLatitude(float latitude) {
-        Latitude = latitude;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public void setLongitude(float longitude) {
-        Longitude = longitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
-    public void setProfileImage(Uri profileImage) { this.profileImage = profileImage; }
+    public void setAddress(String address) { this.address = address; }
+
+    public void addStudent(Student student){students.add(student);}
 
     public String getPatentID() { return PatentID; }
 
-    public String getUserName() {
-        return UserName;
-    }
-
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public int getPhone() {
-        return Phone;
+    public String getPhone() {
+        return phone;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
+
+    public String getSecondName() {return secondName; }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public float getLatitude() {
-        return Latitude;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public float getLongitude() { return Longitude; }
+    public double getLongitude() { return longitude; }
 
-    public Uri getProfileImage() { return profileImage; }
+    public String getAddress() { return address; }
+
+    public List<Student> getStudents(){return students;};
+
+    @Override
+    public String toString() { return PatentID ; }
 }

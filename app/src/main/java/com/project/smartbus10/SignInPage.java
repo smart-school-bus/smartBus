@@ -1,5 +1,7 @@
 package com.project.smartbus10;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,12 +27,14 @@ public class SignInPage extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     //Input field variables
-    private EditText userName;
+    private EditText ID;
     private EditText password;
     private Button signInButton;
+    private ProgressDialog progressBar;
     private Button forgot_your_password;
     //
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +43,23 @@ public class SignInPage extends AppCompatActivity {
         mFirebaseDatabase=FirebaseDatabase.getInstance();
         mDatabaseReference=mFirebaseDatabase.getReference();
 
-
-        userName=(EditText) findViewById(R.id.user_name);
+        ID=(EditText) findViewById(R.id.id);
         password=(EditText) findViewById(R.id.password);
         signInButton=(Button)findViewById(R.id.sign_in_button);
         forgot_your_password=(Button)findViewById(R.id.forgot_your_password_button);
+        progressBar=new ProgressDialog(SignInPage.this);
+        progressBar.setMessage("Logging you in");
         // sign In Button action
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View view) {
-             if(isOnline()){
-               if(checkTheInput()){
-                   CheckTheLoginMethod(userName.getText().toString(),password.getText().toString());
-               }
-             }
+                progressBar.show();
+                if(isOnline()){
+                    if(checkTheInput()){
+                        CheckTheLoginMethod(ID.getText().toString(),password.getText().toString());
+                    }
+                }
             }});
 
         //Forgot your password action
@@ -69,80 +75,45 @@ public class SignInPage extends AppCompatActivity {
 
     }
     //Choose the input method using the userName or ID
-    private void CheckTheLoginMethod(String userName,String password) {
-        userName=userName.trim();//Delete the spaces from the userName
+    private void CheckTheLoginMethod(String ID,String password) {
+        ID=ID.trim();//Delete the spaces from the userName
         password=password.trim();//Delete the spaces from the password
-        if (userName.contains("A")){
-            signIn("SchoolAdministration",userName,password);
+        if (ID.contains("A")){
+            signIn("SchoolAdministration",ID,password);
         }
-        else if (userName.contains("P")){
-            signIn("Parent",userName,password);
+        else if (ID.contains("P")){
+            signIn("Parent",ID,password);
         }
-        else if (userName.contains("D")){
-            signIn("Driver",userName,password);
+        else if (ID.contains("D")){
+            signIn("Driver",ID,password);
         }
         else{
-            signIn(userName,password);
+            progressBar.dismiss();
+            Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
         }
     }
 
 
     // sign In using your ID
-    private void signIn( final String id, final String password) {
-        final String[]path={"SchoolAdministration","Parent","Driver"};
-        for(int i=0;i<path.length;i++){
-            final int finalI = i;
-            final int finalI1 = i;
-            mDatabaseReference.child(path[i]).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()) {
-                        if(id.equals((String) mDataSnapshot.getKey())){// ID verification
-                            if(password.equals((String) mDataSnapshot.child("Password").getValue())){//Password verification
-                                openHomeActivity(path[finalI],mDataSnapshot);
-                                RC_SIGN_IN=1;
-                                break;
-                            }
-                            else{ // error in password
-                                Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-
-                    }
-                    if (RC_SIGN_IN==0){//Do not sign in due to an error in the  ID
-                        Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(SignInPage.this, R.string.error_database, Toast.LENGTH_SHORT).show();
-
-                }
-            });
-        }
-
-    }
-
-    // sign In using your userName
-    private void signIn(final String path , final String userName, final String password) {
+    private void signIn(final String path , final String ID, final String password) {
         mDatabaseReference.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()) {
-                    if(userName.equals((String) mDataSnapshot.child("UserName").getValue())){//UserName verification
-                        if(password.equals((String) mDataSnapshot.child("Password").getValue())){// Password verification
+                    if(ID.equals((String) mDataSnapshot.getKey())){//UserName verification
+                        if(password.equals((String) mDataSnapshot.child("password").getValue())){// Password verification
                             openHomeActivity(path,mDataSnapshot);// open Home page
                             RC_SIGN_IN=1;
                             break;
                         }
                         else{  // error in password
+                            progressBar.dismiss();
                             Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-                if (RC_SIGN_IN==0){//Do not log in due to an error in the username
+                if (RC_SIGN_IN==0){//Do not log in due to an error in the ID
+                    progressBar.dismiss();
                     Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
                 }
 
@@ -151,8 +122,9 @@ public class SignInPage extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                if(databaseError==null){
-                Toast.makeText(SignInPage.this, R.string.error_database, Toast.LENGTH_SHORT).show();}
+                if(databaseError!=null){
+                    progressBar.dismiss();
+                    Toast.makeText(SignInPage.this, R.string.error_database, Toast.LENGTH_SHORT).show();}
 
             }
         });
@@ -161,32 +133,33 @@ public class SignInPage extends AppCompatActivity {
     // Check the entry of all fields
     private boolean checkTheInput() {
 
-        if (userName.getText().toString().isEmpty()) {
-            userName.setError(getString(R.string.error_field_required));
-            userName.requestFocus();
+        if (ID.getText().toString().isEmpty()) {
+            ID.setError(getString(R.string.error_field_required));
+            ID.requestFocus();
+            progressBar.dismiss();
             return false;
         }
 
         if (password.getText().toString().isEmpty()) {
             password.setError(getString(R.string.error_field_required));
             password.requestFocus();
+            progressBar.dismiss();
             return false;
         }
 
         return true;
     }
 
-   // Reorientation to the appropriate home page
+    // Reorientation to the appropriate home page
     public void openHomeActivity(String path ,DataSnapshot mDataSnapshot){
         Intent GoToHomePage;
         SharedPreferences sp = getSharedPreferences("SignIn",MODE_PRIVATE);
         sp.edit().putBoolean("login",true).apply();
-       // User user;
+        // User user;
         switch(path) {
             case "SchoolAdministration":
                 SchoolAdministration admin=mDataSnapshot.getValue(SchoolAdministration.class);
                 admin.setAdminID((String) mDataSnapshot.getKey());
-                sp.edit().putString("UserName",admin.getUserName()).apply();
                 sp.edit().putString("ID",admin.getAdminID()).apply();
                 sp.edit().putString("Name",admin.getFirstName()+" "+admin.getLastName()).apply();
                 sp.edit().putString("user_type","SchoolAdministration").apply();
@@ -194,7 +167,6 @@ public class SignInPage extends AppCompatActivity {
             case  "Parent":
                 Parent parent=mDataSnapshot.getValue(Parent.class);
                 parent.setPatentID((String) mDataSnapshot.getKey());
-                sp.edit().putString("UserName",parent.getUserName()).apply();
                 sp.edit().putString("ID",parent.getPatentID()).apply();
                 sp.edit().putString("Name",parent.getFirstName()+" "+parent.getLastName()).apply();
                 sp.edit().putString("user_type","Parent").apply();
@@ -202,30 +174,37 @@ public class SignInPage extends AppCompatActivity {
             case "Driver":
                 Driver driver=mDataSnapshot.getValue(Driver.class);
                 driver.setDriverID((String) mDataSnapshot.getKey());
-                sp.edit().putString("UserName",driver.getUserName()).apply();
                 sp.edit().putString("ID",driver.getDriverID()).apply();
                 sp.edit().putString("Name",driver.getFirstName()+" "+driver.getLastName()).apply();
                 sp.edit().putString("user_type","Driver").apply();
                 break;
         }
+        progressBar.dismiss();
         finish();
         GoToHomePage = new Intent(SignInPage.this, Home.class);
         startActivity(GoToHomePage);
 
     }
- // Check your internet connection
+    // Check your internet connection
     public boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            progressBar.dismiss();
             Toast.makeText( SignInPage.this, "No Internet connection!", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
+    @Override
+    public void onBackPressed() {
+            finishAffinity();
+            super.onBackPressed();
 
+        }
 }
+
 
 
 

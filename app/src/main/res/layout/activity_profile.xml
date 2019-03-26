@@ -1,55 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ProfileActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
-    <LinearLayout
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary">
-            <ImageView
-                android:id="@+id/image_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                />
-        </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:collapseIcon="@drawable/ic_action_creditcard"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
         <LinearLayout
+            android:background="@drawable/gradientbackground"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_height="200dp"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_marginTop="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+               />
             <TextView
                 android:id="@+id/name"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:text="Wiliam Snoe"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="21sp"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:paddingLeft="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_action_creditcard"/>
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/userId"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:paddingLeft="20dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:paddingLeft="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_action_phone"/>
             <TextView
-                android:id="@+id/phone"
+                android:id="@+id/phoneNm"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:paddingLeft="20dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:paddingLeft="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/busIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_action_bus"/>
             <TextView
-                android:id="@+id/home_address"
+                android:id="@+id/busId"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"/>
-
+                android:paddingLeft="20dp"
+                />
         </LinearLayout>
     </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

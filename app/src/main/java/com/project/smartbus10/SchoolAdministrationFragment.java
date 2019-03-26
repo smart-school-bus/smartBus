@@ -3,13 +3,13 @@ package com.project.smartbus10;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 public class SchoolAdministrationFragment extends Fragment {
+    private Intent goToListPage;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -23,6 +23,7 @@ public class SchoolAdministrationFragment extends Fragment {
         Button buttonDrivers=(Button)view.findViewById(R.id.drivers);
         Button buttonNotification=(Button)view.findViewById(R.id.notification);
         Button buttonComplains=(Button)view.findViewById(R.id.complains);
+        goToListPage = new Intent(getActivity(), ItemList.class);
 
         //
         buttonStudents.setOnClickListener(new View.OnClickListener()
@@ -30,11 +31,8 @@ public class SchoolAdministrationFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Intent GoToListPage = new Intent(getActivity(), PersonList.class);
-                GoToListPage.putExtra("Person","Student");
-                startActivity(GoToListPage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+                goToListPage.putExtra("ListType","Student");
+                startActivity(goToListPage);
             }
         });
         //
@@ -43,11 +41,9 @@ public class SchoolAdministrationFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Intent GoToListPage = new Intent(getActivity(), PersonList.class);
-                GoToListPage.putExtra("Person","Parent");
-                startActivity(GoToListPage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+                goToListPage.putExtra("ListType","Parent");
+                startActivity(goToListPage);
+
             }
         });
 
@@ -55,12 +51,10 @@ public class SchoolAdministrationFragment extends Fragment {
         buttonBuses.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
-                Intent GoToHomePage = new Intent(getActivity(), SignInPage.class);
-                startActivity(GoToHomePage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+            public void onClick(View v) {
+                goToListPage.putExtra("ListType","Bus");
+                startActivity(goToListPage);
+
             }
         });
 
@@ -69,12 +63,9 @@ public class SchoolAdministrationFragment extends Fragment {
         {
             @Override
             public void onClick(View v)
-            {
-                Intent GoToListPage = new Intent(getActivity(), PersonList.class);
-                GoToListPage.putExtra("Person","Driver");
-                startActivity(GoToListPage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+            { goToListPage.putExtra("ListType","Driver");
+                startActivity(goToListPage);
+
             }
         });
 
@@ -84,10 +75,8 @@ public class SchoolAdministrationFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Intent GoToHomePage = new Intent(getActivity(), SignInPage.class);
-                startActivity(GoToHomePage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+
+
             }
         });
         //
@@ -96,10 +85,8 @@ public class SchoolAdministrationFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Intent GoToHomePage = new Intent(getActivity(), SignInPage.class);
-                startActivity(GoToHomePage);
-                Log.d("ADebugTag", "Value: " +"hi hi hi");
-                // do something
+                goToListPage.putExtra("ListType","Complaints");
+                startActivity(goToListPage);
             }
         });
 
@@ -108,5 +95,7 @@ public class SchoolAdministrationFragment extends Fragment {
 
 
     }
-
 }
+
+
+

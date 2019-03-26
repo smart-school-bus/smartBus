@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="@android:color/white"
+    android:minHeight="55dp"
+    android:id="@+id/busitem">
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:background="@drawable/roundedimage"/>
+    <RelativeLayout
+        android:id="@+id/text_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/profile_image"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:paddingTop="10dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_in_list"
+            tools:text="Name:Basmha ALI" />
+
+        <ImageView
+            android:id="@+id/state"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="70dp"
+            android:src="@drawable/on"
+            />
+
+        <TextView
+            android:id="@+id/stateText"
+            android:layout_width="50dp"
+            android:layout_height="24dp"
+            android:text="On Bus"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@id/phone" />
+    </RelativeLayout>
+</RelativeLayout>

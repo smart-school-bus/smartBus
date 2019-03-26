@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationBusStop">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="@dimen/paddingText">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="@dimen/paddingText">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_height"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="5dp"
+            android:text="@string/stop_n" />
+        <EditText
+            android:id="@+id/stop_n"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_height"
+            android:layout_weight="2"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="@dimen/paddingText">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_height"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="5dp"
+            android:text="@string/stop_or" />
+        <EditText
+            android:id="@+id/stop_or"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edit_height"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/location"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_action_location"
+            android:padding="15dp"
+            android:text="@string/location"
+            android:background="@drawable/button_st"
+            android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/insert"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_st"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:text="@string/ins"
+        android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

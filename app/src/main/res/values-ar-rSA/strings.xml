@@ -19,7 +19,7 @@
     <string name="logout">تسجيل الخورج</string>
     <!--School Administration Home Page-->
     <string name="student">قائمة طلاب</string>
-    <string name="parent">قائمةاوليا امور</string>
+    <string name="pa">قائمةاوليا امور</string>
     <string name="driver">قائمة سائقين</string>
     <string name="bus">قائمة الباصات</string>
     <string name="emergency_a">اشعارات الاخطار</string>

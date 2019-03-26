@@ -1,64 +1,72 @@
 package com.project.smartbus10;
 
-public class Driver {
+import java.io.Serializable;
+
+public class Driver  implements Serializable {
     private String DriverID;
-    private String UserName;
-    private String FirstName;
-    private String SecondName;
-    private String LastName;
-    private String Phone;
-    private String Password;
+    private String firstName;
+    private String secondName;
+    private String lastName;
+    private String phone;
+    private String password;
+    private Bus bus;
 
     public void setDriverID(String driverID) {
-        DriverID = driverID;
+        this.DriverID = driverID;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
 
-    public void setLastName(String lastName) { LastName = lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public void setSecondName(String secondName) {
-        SecondName = secondName;
+        this.secondName = secondName;
     }
 
     public void setPhone(String phone) {
-        Phone = phone;
+        this.phone = phone;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
+
+    public void setBus(Bus bus) { this.bus = bus; }
 
     public String getDriverID() {
         return DriverID;
     }
 
-    public String getUserName() {
-        return UserName;
-    }
-
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getSecondName() {
-        return SecondName;
+        return secondName;
     }
 
-    public String getLastName() { return LastName; }
+    public String getLastName() { return lastName; }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
+    }
+
+    public Bus getBus() { return bus; }
+
+    @Override
+    public String toString() {
+        return "\n DriverID :" + DriverID +
+                "\n firstName :" + firstName +
+                "\n secondName :" + secondName +
+                "\n lastName :" + lastName +
+                "\n phone :" + phone ;
     }
 }

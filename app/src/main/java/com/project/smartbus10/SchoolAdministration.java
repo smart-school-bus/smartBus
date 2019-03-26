@@ -1,62 +1,55 @@
 package com.project.smartbus10;
 
-public class SchoolAdministration {
+import java.io.Serializable;
+
+public class SchoolAdministration  implements Serializable {
 
     private String AdminID;
-    private String UserName;
-    private String FirstName;
-    private String SecondName;
-    private String LastName;
-    private String Phone;
-    private String Password;
+    private String firstName;
+    private String secondName;
+    private String lastName;
+    private String phone;
+    private String password;
 
     public void setAdminID(String adminID) {
         AdminID = adminID;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
-
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
-    public void setSecondName(String secondName) { SecondName = secondName; }
+    public void setSecondName(String secondName) { this.secondName = secondName; }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public void setPhone(String phone) {
-        Phone = phone;
+        this.phone = phone;
     }
 
-    public void setPassword(String password) { Password = password; }
+    public void setPassword(String password) { this.password = password; }
 
     public String getAdminID() {
         return AdminID;
     }
 
-    public String getUserName() {
-        return UserName;
-    }
-
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public String getSecondName() { return SecondName; }
+    public String getSecondName() { return secondName; }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <item >
-            <layer-list>
-                <item android:drawable="@color/colorPrimary" />
-                <item android:left="100dp" android:drawable="@color/colorBackgroundButton" />
-            </layer-list>
+        <layer-list>
+            <item android:drawable="@color/colorPrimary" />
+            <item android:left="70dp" android:drawable="@color/colorBackgroundButton" />
+        </layer-list>
 
     </item>
-
 </selector>
