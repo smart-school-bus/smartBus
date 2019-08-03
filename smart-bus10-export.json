@@ -1,0 +1,308 @@
+{
+  "Bus" : {
+    "Bus19445956" : {
+      "adminID" : "A5681",
+      "busLatitude" : 21.3744255,
+      "busLongitude" : 39.7872708,
+      "driverID" : "D194172351",
+      "plate" : " 8888BTL",
+      "studentsNumber" : 0
+    },
+    "Bus1947145250" : {
+      "adminID" : "A5681",
+      "busLatitude" : 21.4402417,
+      "busLongitude" : 39.8096014,
+      "driverID" : "D1931323200",
+      "plate" : "9999DES",
+      "studentsNumber" : 0
+    }
+  },
+  "BusStop" : {
+    "BS10225257" : {
+      "busID" : "Bus19445956",
+      "busStopAddress" : "6853,6853 Talat Al Mullaqiyyah, Al Utaybiyyah, Makkah ",
+      "busStopLatitude" : 21.442749486390237,
+      "busStopLongitude" : 39.812193028628826,
+      "busStopOrder" : 1,
+      "linkAudio" : "https://firebasestorage.googleapis.com/v0/b/smart-bus10.appspot.com/o/audio%2FBus19445956%2FBS10225257?alt=media&token=c7ff04ad-65db-4a51-9a2d-6c39f9404618"
+    },
+    "BS1023443" : {
+      "busID" : "Bus19445956",
+      "busStopAddress" : "9108,9108 Al Madinah Al Munawarah Rd, Al Bibyan, Makkah ",
+      "busStopLatitude" : 21.439405000028664,
+      "busStopLongitude" : 39.80958089232445,
+      "busStopOrder" : 2,
+      "linkAudio" : ""
+    },
+    "BS168110" : {
+      "busID" : "Bus19445956",
+      "busStopAddress" : "2348,2348, Al Bibyan, Makkah 24231 9026, Saudi Arabia",
+      "busStopLatitude" : 21.438872908491522,
+      "busStopLongitude" : 39.80774424970151,
+      "busStopOrder" : 3,
+      "linkAudio" : ""
+    },
+    "BS168513" : {
+      "busID" : "Bus1947145250",
+      "busStopAddress" : "4338,4338, Waly Al Ahd, Makkah 24353 8954, Saudi Arabia",
+      "busStopLatitude" : 21.374502060244637,
+      "busStopLongitude" : 39.78715695440769,
+      "busStopOrder" : 1,
+      "linkAudio" : ""
+    },
+    "BS1723318" : {
+      "busID" : "Bus19445956",
+      "busStopAddress" : "9058,9058, Al Bibyan, Makkah 24231 2249, Saudi Arabia",
+      "busStopLatitude" : 21.438934699866387,
+      "busStopLongitude" : 39.80693992227316,
+      "busStopOrder" : 4,
+      "linkAudio" : "https://firebasestorage.googleapis.com/v0/b/smart-bus10.appspot.com/o/audio%2FBus19445956%2FBS1723318?alt=media&token=804731dc-a5fb-4a99-8ee1-4333bc12419a"
+    }
+  },
+  "Complaints" : {
+    "-LaHExLGKkJJg1u9urHR" : {
+      "description" : "the driver is very reckless ",
+      "driverID" : "D193142477",
+      "parentID" : "P1931811657"
+    },
+    "-Lc7uwkRfcHsoNcfjXT2" : {
+      "description" : "The bus driver is always late",
+      "driverID" : "D193142477",
+      "parentID" : "P1931811657"
+    }
+  },
+  "Driver" : {
+    "D1931323200" : {
+      "firstName" : "Mohammed",
+      "lastName" : "Saleh",
+      "password" : "46792755",
+      "phone" : "",
+      "secondName" : "Khalidi",
+      "token" : ""
+    },
+    "D193142477" : {
+      "firstName" : "Ahmed",
+      "lastName" : "Bashraheel",
+      "password" : "46792755",
+      "phone" : "",
+      "secondName" : "Ali",
+      "token" : ""
+    },
+    "D194172351" : {
+      "firstName" : "Ali",
+      "lastName" : "Ali",
+      "password" : "1421947109",
+      "phone" : "",
+      "secondName" : "Khaled"
+    }
+  },
+  "Emergency" : {
+    "-LbfQgZEI8CHSg_VlKgK" : {
+      "A5681" : {
+        "D193142477" : {
+          "message" : "Malfunction in the engine bus"
+        }
+      }
+    },
+    "-LbfRFytkewq1dT-ybDA" : {
+      "A5681" : {
+        "D193142477" : {
+          "message" : "Bus wheels crashes"
+        }
+      }
+    },
+    "-Lccet6LPGY8ssJYRsB2" : {
+      "A5681" : {
+        "D193142477" : {
+          "message" : "The wheels are disabled"
+        }
+      }
+    },
+    "-LccwIblcYHE40_dERmG" : {
+      "A5681" : {
+        "D1931323200" : {
+          "message" : "The engine crashes"
+        }
+      }
+    }
+  },
+  "Parent" : {
+    "P1931811438" : {
+      "address" : "6853,6853 Talat Al Mullaqiyyah, Al Utaybiyyah, Makkah 24237 2374, Saudi Arabia",
+      "firstName" : "Ahmed",
+      "lastName" : "sharif",
+      "latitude" : 21.442659922437823,
+      "longitude" : 39.81221046298742,
+      "password" : "46792755",
+      "phone" : "",
+      "secondName" : "Khaled",
+      "token" : ""
+    },
+    "P1931811657" : {
+      "address" : "4339,4339, Waly Al Ahd, Makkah 24353 8981, Saudi Arabia",
+      "firstName" : "Khaled",
+      "lastName" : "Asiri",
+      "latitude" : 21.37449800144701,
+      "longitude" : 39.78719886392355,
+      "password" : "46792755",
+      "phone" : "",
+      "secondName" : "Mohmmed",
+      "token" : ""
+    },
+    "P19327221412" : {
+      "address" : "9108,9108 Al Madinah Al Munawarah Rd, Al Bibyan, Makkah 24231 2564, Saudi Arabia",
+      "firstName" : "Ali",
+      "lastName" : " Al Omar",
+      "latitude" : 21.439145040006906,
+      "longitude" : 39.80965230613947,
+      "password" : "101412",
+      "phone" : "",
+      "secondName" : "Khaled"
+    },
+    "P19327222058" : {
+      "address" : "2348,2348, Al Bibyan, Makkah 24231 9026, Saudi Arabia",
+      "firstName" : " Saleh",
+      "lastName" : "Al-Zahrani",
+      "latitude" : 21.438705634739378,
+      "longitude" : 39.80782236903906,
+      "password" : "102058",
+      "phone" : "",
+      "secondName" : "Saleh"
+    },
+    "P194172218" : {
+      "address" : "6939,6939 Al Madinah Al Munawarah Rd, Al Hujun, Makkah 24237 2090, Saudi Arabia",
+      "firstName" : "Ahmed ",
+      "lastName" : "Sharif",
+      "latitude" : 21.443478790813067,
+      "longitude" : 39.809317365288734,
+      "password" : "1421913481",
+      "phone" : "",
+      "secondName" : "Khaled"
+    }
+  },
+  "SchoolAdministration" : {
+    "63hdRxgTiKWetRPVCNI9iMjx9uu2" : {
+      "token" : ""
+    },
+    "A5681" : {
+      "firstName" : "Ali",
+      "lastName" : "Ba Shrahel",
+      "password" : "1450575459",
+      "phone" : "",
+      "secondName" : "Ahmed",
+      "token" : ""
+    }
+  },
+  "Student" : {
+    "S1932722279" : {
+      "busID" : "Bus19445956",
+      "busStopID" : "BS10225257",
+      "date" : "10/4/2019",
+      "enterTime" : "7:05am",
+      "firstName" : "Mohamed",
+      "lastName" : " Sherif",
+      "leaveTime" : "7:30am",
+      "level" : "Level1",
+      "parentID" : "P1931811438",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "704AD2B"
+    },
+    "S19327223747" : {
+      "busID" : "Bus19445956",
+      "busStopID" : "BS168110",
+      "date" : "10/4/2019",
+      "enterTime" : "7:00am",
+      "firstName" : "Ali",
+      "lastName" : "Al-Zahrani",
+      "leaveTime" : "7:30am",
+      "level" : "Level1",
+      "parentID" : "P19327222058",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "1934567802"
+    },
+    "S1941023144" : {
+      "busID" : "Bus19445956",
+      "busStopID" : "BS10225257",
+      "date" : "10/4/2019",
+      "enterTime" : "3:49am",
+      "firstName" : "Ali",
+      "lastName" : "sherif",
+      "leaveTime" : "4:00am",
+      "level" : "Level1",
+      "parentID" : "P1931811438",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "4528DG"
+    },
+    "S19417215" : {
+      "busID" : "Bus19445956",
+      "busStopID" : "BS10225257",
+      "date" : "",
+      "firstName" : "Khahled",
+      "lastName" : "Sharif",
+      "leaveTime" : "",
+      "level" : "Level1",
+      "parentID" : "P1931811438",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "4655798f"
+    },
+    "S1941734222" : {
+      "busID" : "Bus1947145250",
+      "busStopID" : "BS168513",
+      "date" : "",
+      "firstName" : "Khaled ",
+      "lastName" : "Asiri ",
+      "leaveTime" : "",
+      "level" : "Level5",
+      "parentID" : "P1931811657",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "Df1278"
+    },
+    "S1947183533" : {
+      "busID" : "Bus1947145250",
+      "busStopID" : "BS168513",
+      "date" : "10/4/2019",
+      "enterTime" : "3:50am",
+      "firstName" : "Ali",
+      "lastName" : "Asiri",
+      "leaveTime" : "4:00am",
+      "level" : "Level1",
+      "parentID" : "P1931811657",
+      "state" : "out",
+      "stuAttendance" : false,
+      "tag" : "704AAD2 "
+    },
+    "S194718362" : {
+      "busID" : "Bus1947145250",
+      "busStopID" : "BS168513",
+      "date" : "10/4/2019",
+      "enterTime" : "3:51am",
+      "firstName" : "Ahmed ",
+      "lastName" : "Asiri ",
+      "leaveTime" : "4:00am",
+      "level" : "Level1",
+      "parentID" : "P1931811657",
+      "state" : "out",
+      "stuAttendance" : false,
+      "tag" : "B6F24FA3"
+    },
+    "S1949211851" : {
+      "busID" : "Bus19445956",
+      "busStopID" : "BS10225257",
+      "date" : "10/4/2019",
+      "enterTime" : "7:00am",
+      "firstName" : "Ali",
+      "lastName" : "Al_Omer",
+      "leaveTime" : "7:30am",
+      "level" : "Level7",
+      "parentID" : "P19327221412",
+      "state" : "out",
+      "stuAttendance" : true,
+      "tag" : "D123489"
+    }
+  }
+}
