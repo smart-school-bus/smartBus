@@ -12,7 +12,10 @@ public class Student  implements Serializable {
     private Parent parent;
     private Bus bus;
     private BusStop busStop;
-    private StudentTimeNote not;
+    private String date;
+    private String EnterTime;
+    private String leaveTime;
+    private String state;
 
 
 
@@ -34,7 +37,13 @@ public class Student  implements Serializable {
 
     public void setBusStop(BusStop busStop) { this.busStop = busStop; }
 
-    public void setNot(StudentTimeNote not) { this.not = not; }
+    public void setDate(String date) { this.date = date; }
+
+    public void setEnterTime(String enterTime) { EnterTime = enterTime; }
+
+    public void setLeaveTime(String leaveTime) { this.leaveTime = leaveTime; }
+
+    public void setState(String state) { this.state = state; }
 
     public String getStuID() { return StuID; }
 
@@ -54,5 +63,15 @@ public class Student  implements Serializable {
 
     public BusStop getBusStop() { return busStop; }
 
-    public StudentTimeNote getNot() { return not; }
+    public String getDate() { return date; }
+
+    public String getEnterTime() { return EnterTime; }
+
+    public String getLeaveTime() { return leaveTime; }
+
+    public String getState() { return state; }
+    @Override
+    public String toString() {
+        return   "Date " + date + ' ' + "EnterTime " + EnterTime + ' ' + "leaveTime " + leaveTime + ' ' ;
+    }
 }

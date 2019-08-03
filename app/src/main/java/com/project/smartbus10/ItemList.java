@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class ItemList extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mDatabaseReference2;
     private ChildEventListener mChildEventListener;
+    private SharedPreferences sp;
 
     //
     private String listType;
@@ -56,11 +58,13 @@ public class ItemList extends AppCompatActivity {
         Intent i = getIntent();
         listType = (String) i.getSerializableExtra("ListType");
         parentId=(String) i.getSerializableExtra("parentId");
+        Log.d("ADebugTag", "Value: parent " +parentId);
         progressBar=new ProgressDialog(ItemList.this);
         progressBar.setMessage(getString(R.string.p));
+        progressBar.show();
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        isOnline();
+
         if (listType.equals("Complaints")){
             fab.setVisibility(View.GONE);
         }
@@ -77,7 +81,8 @@ public class ItemList extends AppCompatActivity {
         mFirebaseDatabase=FirebaseDatabase.getInstance();
         mDatabaseReference=mFirebaseDatabase.getReference().child(listType);
         mDatabaseReference2=mFirebaseDatabase.getReference();
-        progressBar.show();
+        sp = getSharedPreferences("SignIn",MODE_PRIVATE);
+
         itemList = new ArrayList<>();
         list=(ListView)findViewById(R.id.itemlist) ;
         adapter = new ItemAdapter(this, R.layout.item_list, itemList);
@@ -87,11 +92,14 @@ public class ItemList extends AppCompatActivity {
             @SuppressLint("NewApi")
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                 Item item =dataSnapshot.getValue(Item.class);
                 checkListType(dataSnapshot,item);
                 item.setID((String) dataSnapshot.getKey());
                 item.setProfileImage(personImageProfile());
                 adapter.add(item);
+                isOnline();
+                progressBar.dismiss();
 
             }
 
@@ -100,17 +108,16 @@ public class ItemList extends AppCompatActivity {
                 try{
                 String ID = dataSnapshot.getKey().toString();
                 Item item =dataSnapshot.getValue(Item.class);
-                 Log.d("ADebugTag", "Value: " +"TR");
                  checkListType(dataSnapshot,item);
-                Log.d("ADebugTag", "Value: " +"ZX");
                 item.setID((String) dataSnapshot.getKey());
                 item.setProfileImage(personImageProfile());
                 itemList.add(getIndext(ID), item);
                 adapter.notifyDataSetChanged();}
                 catch (Exception e){
-                    Log.d("ADebugTag", "Value: "+"error");
+                    Log.d("SmartBus", "Value: "+"error");
                 }
-
+                isOnline();
+                progressBar.dismiss();
             }
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
@@ -121,9 +128,10 @@ public class ItemList extends AppCompatActivity {
                         itemList.remove(p);
                     }
                 }}catch (Exception e){
-                    Log.d("ADebugTag", "Value: "+"error");
+                    Log.d("SmartBus", "Value: "+"error");
                 }
-                adapter.notifyDataSetChanged();;
+                adapter.notifyDataSetChanged();
+                progressBar.dismiss();
             }
 
             @Override
@@ -142,11 +150,12 @@ public class ItemList extends AppCompatActivity {
         };
         if(parentId==null){
             mDatabaseReference.addChildEventListener(mChildEventListener);
+
         }else {childrenList().addChildEventListener(mChildEventListener);
             fab.setVisibility(View.GONE);
+
         }
 
-        progressBar.dismiss();
         //
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -172,7 +181,7 @@ public class ItemList extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(parentId!=null){
+                if(parentId!=null&&sp.getString("user_type","").equals("SchoolAdministration")){
                     Log.d("ADebugTag", parentId.isEmpty()+"");
                     Intent goToDetailsActivity = new Intent(ItemList.this, DetailsActivity.class);
                     goToDetailsActivity.putExtra("ListType","Parent");
@@ -211,17 +220,16 @@ public class ItemList extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        if(parentId!=null){
+        if(parentId!=null&&sp.getString("user_type","").equals("SchoolAdministration")){
             Intent goToDetailsActivity = new Intent(ItemList.this, DetailsActivity.class);
             goToDetailsActivity.putExtra("ListType","Parent");
             goToDetailsActivity.putExtra("idItem",parentId);
             startActivity(goToDetailsActivity);
-        ;}
+        }
         else
         {Intent goHome = new Intent(ItemList.this, Home.class);
         startActivity(goHome);}
         finish();
-
         super.onBackPressed();
     }
 

@@ -7,7 +7,7 @@ public class Bus implements Serializable {
     private String ID;
     private double busLatitude;
     private double busLongitude;
-    private int studentNumber;
+    private int studentsNumber;
     private String plate;
     private SchoolAdministration admin;
     private Driver driver;
@@ -26,8 +26,8 @@ public class Bus implements Serializable {
         this.busLongitude = busLongitude;
     }
 
-    public void setStudentNumber(int studentNumber) {
-        this.studentNumber = studentNumber;
+    public void setStudentsNumber(int studentsNumber) {
+        this.studentsNumber = studentsNumber;
     }
 
     public void setPlate(String plate) { this.plate = plate; }
@@ -50,8 +50,8 @@ public class Bus implements Serializable {
         return busLongitude;
     }
 
-    public int getStudentNumber() {
-        return studentNumber;
+    public int getStudentsNumber() {
+        return studentsNumber;
     }
 
     public String getPlate() { return plate; }

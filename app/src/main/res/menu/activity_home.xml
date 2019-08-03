@@ -12,10 +12,6 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_portrait"
             android:title="@string/profile" />
-        <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/setting" />
     </group>
 
     <item

@@ -19,7 +19,7 @@
         android:paddingLeft="20dp"
         android:background="@drawable/button_f"
         android:drawableLeft="@drawable/bags"
-        android:text="@string/student"
+        android:text="@string/child"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
@@ -33,25 +33,13 @@
         android:layout_margin="16dp"
         android:paddingLeft="20dp"
         android:background="@drawable/button_s"
-        android:drawableLeft="@drawable/ic_room"
+        android:drawableLeft="@drawable/ic_place"
+        android:textColor="@color/colorPrimary"
         android:text="@string/tracing"
         android:textAlignment="center"
         android:textAllCaps="false"
         />
 
-    <Button
-        android:id="@+id/notifications"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:paddingLeft="20dp"
-        android:background="@drawable/button_f"
-        android:drawableLeft="@drawable/ic_notifications_active"
-        android:text="@string/notifications"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
 
 
     <Button
@@ -61,8 +49,9 @@
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:paddingLeft="20dp"
-        android:background="@drawable/button_s"
+        android:background="@drawable/button_f"
         android:drawableLeft="@drawable/ic_note_add"
+        android:textColor="@android:color/white"
         android:text="@string/addComplains"
         android:textAlignment="center"
         android:textAllCaps="false"

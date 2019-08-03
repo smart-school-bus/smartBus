@@ -21,7 +21,7 @@ public class SchoolAdministrationFragment extends Fragment {
         Button buttonParents=(Button)view.findViewById(R.id.parent);
         Button buttonBuses=(Button)view.findViewById(R.id.bus);
         Button buttonDrivers=(Button)view.findViewById(R.id.drivers);
-        Button buttonNotification=(Button)view.findViewById(R.id.notification);
+        Button buttonEmergency=(Button)view.findViewById(R.id.emergency);
         Button buttonComplains=(Button)view.findViewById(R.id.complains);
         goToListPage = new Intent(getActivity(), ItemList.class);
 
@@ -70,12 +70,14 @@ public class SchoolAdministrationFragment extends Fragment {
         });
 
         //
-        buttonNotification.setOnClickListener(new View.OnClickListener()
+        buttonEmergency.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                goToListPage = new Intent(getActivity(), EmergencyList.class);
 
+                startActivity(goToListPage);
 
             }
         });
@@ -91,6 +93,8 @@ public class SchoolAdministrationFragment extends Fragment {
         });
 
        //
+        Intent serviceIntent = new Intent(getActivity(), FcmMessagingService.class);
+        getActivity().startService(serviceIntent);
         return view;
 
 

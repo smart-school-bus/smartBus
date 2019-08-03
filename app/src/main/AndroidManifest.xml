@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.smartbus10">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +29,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <service
+            android:name=".BluetoothService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".StudentNameVoiceService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".CheckStudentsService"
+            android:enabled="true"
+            android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,32 +54,123 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".BusLocationMapActivity"
-            android:label="@string/title_activity_bus_location_map"></activity>
+            android:name=".EmergencyList"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.project.smartbus10.Home" />
+        </activity>
+
+        <service
+            android:name=".PlayAudioService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name=".MapsActivityHomeAddress"
-            android:label="@string/title_activity_maps_location" />
-        <activity
-            android:name=".BusDetailsActivity"
+            android:name=".StudentLocation"
             android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.smartbus10.SignInPage" />
         </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".BusMapActivity"
+            android:label=""
+            android:theme="@style/AppTheme.noDarkActionBar" />
+        <activity
+            android:name=".BusStopsMapsActivity"
+            android:label="@string/title_activity_bus_stops_maps" />
+        <activity
+            android:name=".BusLocationMapActivity"
+            android:label="@string/title_activity_bus_location_map" />
+        <activity
+            android:name=".MapsActivityHomeAddress"
+            android:label="@string/title_activity_maps_location" />
+        <activity
+            android:name=".BusDetailsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".DetailsActivity"
-            android:theme="@style/AppTheme.noDarkActionBar" />
-        <activity android:name=".RegistrationBusStop" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="com.project.smartbus10.DETAILS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegistrationBusStop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ComplaintsActivity"
-            android:theme="@style/AppTheme.noDarkActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ResultActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity="" />
-        <activity android:name=".Emergency" />
+            android:screenOrientation="portrait"
+            android:taskAffinity=""
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".EmergencyActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="com.project.smartbus10.EMERGENCY" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".FcmInstanceIdService"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".FcmMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="@string/default_notification_channel_id" />
+        </service>
         <service
             android:name=".TrackingService"
             android:enabled="true"
@@ -73,7 +179,9 @@
 
         <activity
             android:name=".ChangePassword"
-            android:label="">
+            android:label=""
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.project.smartbus10.SignInPage" />
@@ -81,23 +189,36 @@
         <activity
             android:name=".Registration"
             android:label=""
-            android:theme="@style/AppTheme.noDarkActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ItemList"
             android:label=""
-            android:theme="@style/AppTheme.noDarkActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Home"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ParentList" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ParentList"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SignInPage"
             android:label="@string/title_activity_sign_in_page"
-            android:theme="@style/AppTheme.noDarkActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.noDarkActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.noDarkActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

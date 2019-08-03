@@ -172,19 +172,19 @@ public class RegistrationDriverFragment extends Fragment {
                     else{ if( itemType.equals("Driver")){
                            if(checkPass(driver.getPassword())){
                                if(!newPass.getText().toString().isEmpty())
-                               {driver.setPassword(newPass.getText().toString());}
+                               {driver.setPassword(newPass.getText().toString().hashCode()+"");}
                                driver.setPhone("+966"+phNum.getText().toString());
                                if(profile==null)
                                { Log.d("ADebugTag",busID);
                                    if(busID!=null)
-                                   { Log.d("ADebugTag","busID"+busID);
+                                   {
                                        mDatabaseReferenceBus.child("Bus").child(busID).child("driverID").setValue(driver.getDriverID());}
                                }
                                updateDriver();}
                            }else{
                                if(checkPass(admin.getPassword())){
                                    if(!newPass.getText().toString().isEmpty())
-                                   {admin.setPassword(newPass.getText().toString());}
+                                   {admin.setPassword(newPass.getText().toString().hashCode()+"");}
                                    admin.setPhone("+966"+phNum.getText().toString());
                                    updateAdmin();}
                            }progressBar.dismiss();
@@ -257,7 +257,6 @@ public class RegistrationDriverFragment extends Fragment {
     }
 
     public void getBusesID(){
-        Log.d("ADebugTag", "2"+" "+busID);
         busIDList=new ArrayList<>();
         if(busID!=null)
         {busIDList.add(busID);}
@@ -295,6 +294,8 @@ public class RegistrationDriverFragment extends Fragment {
 
     }
     public  void insertDriver(){
+        final String pass=driver.getPassword();
+        driver.setPassword(pass.hashCode()+"");
         mDatabaseReference.child(id).setValue(driver).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete( Task<Void> task) {
@@ -305,7 +306,7 @@ public class RegistrationDriverFragment extends Fragment {
                     phNum.setText("");
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.log_info);
-                    builder.setMessage(getString(R.string.iD)+ id +'\n'+getString(R.string.passw)+driver.getPassword());
+                    builder.setMessage(getString(R.string.iD)+ id +'\n'+getString(R.string.passw)+pass);
                     builder.setPositiveButton(R.string.cancel,
                             new DialogInterface.OnClickListener() {
                                 @SuppressLint("NewApi")
@@ -414,7 +415,6 @@ public class RegistrationDriverFragment extends Fragment {
                        {
                          busID= mDataSnapshot.getKey().toString();
                        }
-                    Log.d("ADebugTag", "1");
                         getBusesID();
                         getInfo();
 
@@ -431,7 +431,6 @@ public class RegistrationDriverFragment extends Fragment {
         });
     }
     public void showDriverInfo(){
-        Log.d("ADebugTag", "3");
         fName.setEnabled(false);
         fName.setText(driver.getFirstName());
         sName.setEnabled(false);
@@ -442,7 +441,6 @@ public class RegistrationDriverFragment extends Fragment {
 
     }
     public void showAdminInfo(){
-        Log.d("ADebugTag", "3");
         fName.setEnabled(false);
         fName.setText(admin.getFirstName());
         sName.setEnabled(false);
@@ -460,7 +458,7 @@ public class RegistrationDriverFragment extends Fragment {
                 return false;
             }
         }
-        if(!(oldPass.getText().toString().isEmpty())&&!(oldPass.getText().toString().equals(pass))){
+        if(!(oldPass.getText().toString().isEmpty())&&!((oldPass.getText().toString().hashCode()+"").equals(pass))){
             oldPass.setError(getString(R.string.c_p_error));
             oldPass.requestFocus();
             return false;

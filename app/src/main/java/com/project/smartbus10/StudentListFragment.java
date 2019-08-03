@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +50,8 @@ public class StudentListFragment extends Fragment {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.student_list_fragment, container, false);
-        Log.d("ADebugTag", "2"+busId);
         if(getArguments()!=null){
             busId=(String)getArguments().getString("busId");
-            Log.d("ADebugTag", "3"+busId);
             stuQuery = mDatabaseReference.orderByChild("busID").equalTo(busId);
             studentList = new ArrayList<>();
             list=(ListView)view.findViewById(R.id.stud_list) ;
@@ -69,10 +66,8 @@ public class StudentListFragment extends Fragment {
                     student=dataSnapshot.getValue(Student.class);
                     student.setStuID((String) dataSnapshot.getKey());
                     Log.d("ADebugTag", "4"+(String) dataSnapshot.getKey());
-                      getState(student.getStuID());
                         adapter.add(student);
-
-
+                        
                 }
 
                 @Override
@@ -99,29 +94,5 @@ public class StudentListFragment extends Fragment {
         }
         return view;}
 
-    private void getState(String id) {
 
-        fireQuery= mDatabaseReferenceNot.orderByChild("studentID").equalTo(id);
-        Log.d("ADebugTag", "45"+fireQuery);
-        fireQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for(DataSnapshot mDataSnapshot:dataSnapshot.getChildren())
-                    { student.setNot(mDataSnapshot.getValue(StudentTimeNote.class));
-
-                    }
-
-                    Log.d("ADebugTag", ""+ adapter.getPosition(student));
-                    adapter.insert(student,adapter.getPosition(student));
-                    adapter.add(student);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }); }
 }

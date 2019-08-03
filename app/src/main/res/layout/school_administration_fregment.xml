@@ -39,6 +39,7 @@
             android:background="@drawable/button_s"
             android:text="@string/pa"
             android:drawableLeft="@drawable/parent"
+            android:textColor="@color/colorPrimary"
             android:textAlignment="center"
             android:textAllCaps="false" />
 
@@ -71,12 +72,13 @@
             android:paddingLeft="20dp"
             android:background="@drawable/button_s"
             android:drawableLeft="@drawable/driverhome"
+            android:textColor="@color/colorPrimary"
             android:text="@string/driver"
             android:textAlignment="center"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/notification"
+            android:id="@+id/emergency"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -85,8 +87,8 @@
             android:layout_margin="16dp"
             android:paddingLeft="20dp"
             android:background="@drawable/button_f"
-            android:drawableLeft="@drawable/ic_notifications_active"
-            android:text="@string/notifications"
+            android:drawableLeft="@drawable/ic_error"
+            android:text="@string/emergency_a"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@android:color/white"/>
@@ -102,6 +104,7 @@
             android:paddingLeft="20dp"
             android:background="@drawable/button_s"
             android:drawableLeft="@drawable/ic_announcement"
+            android:textColor="@color/colorPrimary"
             android:text="@string/complains"
             android:textAlignment="center"
             android:textAllCaps="false"

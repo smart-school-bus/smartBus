@@ -93,7 +93,7 @@ public class RegistrationBusFragment extends Fragment {
                 bus.setPlate(plate.getText().toString());
                 bus.setBusLatitude(0);
                 bus.setBusLatitude(0);
-                bus.setStudentNumber(0);
+                bus.setStudentsNumber(0);
                 if(verifyInput()){ checkExist();}
             }
         });
@@ -127,7 +127,7 @@ public class RegistrationBusFragment extends Fragment {
         busId="Bus"+sdf.format(date);
     }
     public boolean verifyInput(){
-        if(plate.getText().toString().isEmpty()){
+        if(plate.getText().toString().isEmpty()||plate.getText().toString().equals("")){
             plate.setError(getString(R.string.error_field_required));
             plate.requestFocus();
             progressBar.dismiss();
@@ -193,6 +193,8 @@ public class RegistrationBusFragment extends Fragment {
     }
 
     private void saveBus() {
+        bus.setBusLatitude(21.441129);
+        bus.setBusLongitude(39.810661);
         mDatabaseReference.child(busId).setValue(bus).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete( Task<Void> task) {

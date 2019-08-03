@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "302305397813-2gt5snduiutt4bdunrr1boceiid0b2e7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.project.smartbus10",
-            "certificate_hash": "d500c0f6555a10faf3e777a188af646d6bae9dcc"
-          }
-        },
-        {
           "client_id": "302305397813-mjj9inu8mh8p4ufctg4b2if9igncm3he.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -33,20 +25,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "302305397813-mjj9inu8mh8p4ufctg4b2if9igncm3he.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

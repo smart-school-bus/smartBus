@@ -183,7 +183,6 @@
             android:layout_marginHorizontal="@dimen/paddingText"
             android:layout_marginVertical="16dp"
             android:layout_weight="1">
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -192,11 +191,16 @@
                 android:paddingLeft="5dp"
                 android:text="@string/bus_stop" />
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
             <Spinner
                 android:id="@+id/bus_stop"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
                 android:background="@android:drawable/btn_dropdown" />
 
             <ImageButton
@@ -209,6 +213,7 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_action_location" />
 
+        </LinearLayout>
         </LinearLayout>
 
         <Button

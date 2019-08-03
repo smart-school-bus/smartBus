@@ -94,7 +94,7 @@ public class ChangePassword extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()) {
-                            if(ID.getText().toString().trim().equals((String) mDataSnapshot.getKey())){//ID verification
+                            if(ID.getText().toString().trim().equals((String) mDataSnapshot.getKey())){//UserName verification
                                 phone=mDataSnapshot.child("phone").getValue().toString();
                                 openMessage();
                                 break;
@@ -154,7 +154,7 @@ public class ChangePassword extends AppCompatActivity {
     private void openMessage(){
         AlertDialog.Builder builder = new AlertDialog.Builder(ChangePassword.this);
         builder.setMessage("Verification code sent to 05******"+phone.substring(10));
-        builder.setPositiveButton(R.string.ok,
+        builder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     @SuppressLint("NewApi")
                     public void onClick(DialogInterface dialog,
@@ -314,7 +314,7 @@ public class ChangePassword extends AppCompatActivity {
             newPass.requestFocus();}
         else
         {if(vPass.getText().toString().trim().equals(newPass.getText().toString().trim())){
-            mDatabaseReference.child(path).child(ID.getText().toString().trim()).child("password").setValue(newPass.getText().toString().trim());
+            mDatabaseReference.child(path).child(ID.getText().toString().trim()).child("password").setValue(newPass.getText().toString().trim().hashCode());
         }
         else{
             vPass.setError(getString(R.string.error_match));

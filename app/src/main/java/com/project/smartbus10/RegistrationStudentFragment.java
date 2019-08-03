@@ -3,6 +3,7 @@ package com.project.smartbus10;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -94,9 +95,10 @@ public class RegistrationStudentFragment extends Fragment {
         mDatabaseReference2 = mFirebaseDatabase.getReference();
         mDatabaseReference = mFirebaseDatabase.getReference().child("Student");
         if (getArguments() != null) {
-            studentID = (String) getArguments().getString("idItem");
+            studentID =(String) getArguments().getString("idItem");
             student = (Student) getArguments().getSerializable("item");
-            parent = (Parent) getArguments().getSerializable("parent");
+            if( getArguments().getSerializable("parent")!=null)
+            { parent = (Parent) getArguments().getSerializable("parent");}
             if (studentID != null) {
                 bus = new Bus();
                 busStop = new BusStop();
@@ -209,6 +211,22 @@ public class RegistrationStudentFragment extends Fragment {
                 }
             }
         });
+        busStopB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goToMap = new Intent(getActivity(), BusStopsMapsActivity.class);
+                goToMap.putExtra("createMarker", false);
+                goToMap.putExtra("reStud",true);
+                if(bus!=null&&bus.getID()!=null){
+                    goToMap.putExtra("busId", bus.getID());
+                }if(busStop!=null&&busStop.getBusStopID()!=null){
+                    goToMap.putExtra("busStopId", busStop.getBusStopID());
+                }if(parent!=null&&parent.getPatentID()!=null){
+                    goToMap.putExtra("parentId",parent.getPatentID());
+                }
+                startActivity(goToMap);
+            }
+        });
         return view;
     }
 
@@ -240,12 +258,12 @@ public class RegistrationStudentFragment extends Fragment {
             return false;
         }
 
-        if (bus.getID() == null) {
+        if (bus.getID() == null||bus.getID().equals("")) {
             ((TextView) busSpinner.getSelectedView()).setError(getString(R.string.error_field_required));
             ((TextView) busSpinner.getSelectedView()).requestFocus();
             return false;
         }
-        if (busStop.getBusStopID() == null) {
+        if (busStop.getBusStopID() == null||busStop.getBusStopID().equals("")) {
             ((TextView) busStopSpinner.getSelectedView()).setError(getString(R.string.error_field_required));
             ((TextView) busStopSpinner.getSelectedView()).requestFocus();
             return false;
@@ -266,7 +284,6 @@ public class RegistrationStudentFragment extends Fragment {
                         existStudent = mDataSnapshot.getValue(Student.class);
                         existStudent.setStuID(mDataSnapshot.getKey());
                         if (existStudent.getFirstName().equals(student.getFirstName())) {
-                            Log.d("ADebugTag", "Value: student1");
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(R.string.st_exist);
                             builder.setMessage('\n' + existStudent.getStuID() + '\n' + existStudent.getFirstName() + " " + existStudent.getLastName());
@@ -325,7 +342,6 @@ public class RegistrationStudentFragment extends Fragment {
                             });
                     builder.show();
                 } else {
-                    Log.d("ADebugTag", "Value: student4");
                     checkExist();
                 }
 
@@ -341,7 +357,11 @@ public class RegistrationStudentFragment extends Fragment {
 
     private void insertStudent() {
         try {
-
+            student.setState("out");
+            student.setDate("");
+            student.setLeaveTime("");
+            student.setDate("");
+            student.setLeaveTime("");
             mDatabaseReference.child(studentID).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -411,7 +431,7 @@ public class RegistrationStudentFragment extends Fragment {
         busList = new ArrayList<>();
         if (student == null) {
             busList.add(new Bus());
-        }
+        }else {Log.d("ADebugTag", "student!=null");}
         mDatabaseReference2.child("Bus").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -421,14 +441,25 @@ public class RegistrationStudentFragment extends Fragment {
                         b.setID(mDataSnapshot.getKey().toString());
                         if (student == null || bus == null || !(bus.getID().equals(b.getID()))) {
                             busList.add(b);
-                            final ArrayAdapter<Bus> adapter = new ArrayAdapter<Bus>(getActivity(), R.layout.spinner_row, busList);
-                            busSpinner.setAdapter(adapter);
-                        } else busList.add(0, b);
+                            Log.d("ADebugTag", "student 1") ;
+                        } else {
+                            if(busList.size()>0){
+                                busList.add(0,b);
+                                Log.d("ADebugTag", "student 2");
+                            }
+                            else
+                            busList.add(0, b);
+                            Log.d("ADebugTag", "student 3");
+
+                             }
 
                     }
+                    final ArrayAdapter<Bus> adapter = new ArrayAdapter<Bus>(getActivity(), R.layout.spinner_row, busList);
+                    busSpinner.setAdapter(adapter);
                 } else {
                     busList.clear();
                     busList.add(new Bus());
+                    Log.d("ADebugTag", "student!=4");
                     final ArrayAdapter<Bus> adapter = new ArrayAdapter<Bus>(getActivity(), R.layout.spinner_row, busList);
                     busSpinner.setAdapter(adapter);
                 }
@@ -447,12 +478,15 @@ public class RegistrationStudentFragment extends Fragment {
         busStopList = new ArrayList<>();
         if (student == null) {
             busStopList.add(new BusStop());
-        }
-        if (i != 0) {
+            if (i != 0) {
+                fireQuery = mDatabaseReference2.child("BusStop").orderByChild("busID").equalTo(bus.getID());
+            } else {
+                fireQuery = mDatabaseReference2.child("BusStop");
+            }
+        }else {
             fireQuery = mDatabaseReference2.child("BusStop").orderByChild("busID").equalTo(bus.getID());
-        } else {
-            fireQuery = mDatabaseReference2.child("BusStop");
         }
+
         fireQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -461,6 +495,7 @@ public class RegistrationStudentFragment extends Fragment {
                         BusStop busStop = mDataSnapshot.getValue(BusStop.class);
                         busStop.setBusStopID(mDataSnapshot.getKey().toString());
                         busStopList.add(busStop);
+                        //error
                         final ArrayAdapter<BusStop> adapter = new ArrayAdapter<BusStop>(getActivity(), R.layout.spinner_row, busStopList);
                         busStopSpinner.setAdapter(adapter);
                     }
@@ -553,5 +588,6 @@ public class RegistrationStudentFragment extends Fragment {
         progressBar.dismiss();
 
     }
+
 }
 

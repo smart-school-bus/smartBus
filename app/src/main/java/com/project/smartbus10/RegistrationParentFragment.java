@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,6 @@ public class RegistrationParentFragment extends Fragment {
             newPassText.setVisibility(View.VISIBLE);
             vPass.setVisibility(View.VISIBLE);
             vPassText.setVisibility(View.VISIBLE);
-            Log.d("ADebugTag",""+getArguments().getString("ListType"));
             if(!(sp.getString("user_type","").equals("SchoolAdministration"))){
                 oldPass.setVisibility(View.VISIBLE);
                 oldPassText.setVisibility(View.VISIBLE);
@@ -154,7 +152,7 @@ public class RegistrationParentFragment extends Fragment {
                             parent.setAddress("" + MapsActivityHomeAddress.homeAddress);
                         }
                         if(!newPass.getText().toString().isEmpty())
-                        {parent.setPassword(newPass.getText().toString());}
+                        {parent.setPassword(newPass.getText().toString().hashCode()+"");}
                         parent.setPhone("+966"+phNum.getText().toString());
                         if(MapsActivityHomeAddress.longitude!=0&& MapsActivityHomeAddress.latitude!=0)
                         {parent.setLongitude(MapsActivityHomeAddress.longitude);
@@ -188,7 +186,6 @@ public class RegistrationParentFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue()!=null){
                     for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()){
-                        Log.d("ADebugTag", "Value: " +mDataSnapshot.getValue() +"");
                         existParent =new Parent();
                         existParent =mDataSnapshot.getValue(Parent.class);
                         existParent.setPatentID(mDataSnapshot.getKey());
@@ -231,6 +228,8 @@ public class RegistrationParentFragment extends Fragment {
     }
 
     public  void insertParent(){
+        final String pas=parent.getPassword();
+        parent.setPassword(pas.hashCode()+"");
         mDatabaseReference.child(parentId).setValue(parent).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -245,7 +244,7 @@ public class RegistrationParentFragment extends Fragment {
                     MapsActivityHomeAddress.homeAddress=null;
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(R.string.log_info);
-                    builder.setMessage(getString(R.string.iD)+parentId+'\n'+getString(R.string.passw)+parent.getPassword());
+                    builder.setMessage(getString(R.string.iD)+parentId+'\n'+getString(R.string.passw)+pas);
                     builder.setPositiveButton(R.string.cancel,
                             new DialogInterface.OnClickListener() {
                                 @SuppressLint("NewApi")
@@ -335,7 +334,7 @@ public class RegistrationParentFragment extends Fragment {
                 return false;
             }
         }
-        if(!(oldPass.getText().toString().isEmpty())&&!(oldPass.getText().toString().equals(pass))){
+        if(!(oldPass.getText().toString().isEmpty())&&!((oldPass.getText().toString().hashCode()+"").equals(pass))){
             oldPass.setError(getString(R.string.c_p_error));
             oldPass.requestFocus();
             return false;
@@ -372,7 +371,6 @@ public class RegistrationParentFragment extends Fragment {
 
     }
     public void showParentInfo(){
-        Log.d("ADebugTag", "3");
         fName.setEnabled(false);
         fName.setText(parent.getFirstName());
         sName.setEnabled(false);
@@ -386,6 +384,7 @@ public class RegistrationParentFragment extends Fragment {
     private void updateParent() {
         parentId=parent.getPatentID();
         parent.setPatentID(null);
+
         mDatabaseReference.child(parentId).setValue(parent).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

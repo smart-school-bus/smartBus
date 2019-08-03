@@ -4,52 +4,205 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Emergency">
+    tools:context=".ComplaintsActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+        tools:ignore="MissingPrefix" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/ic_delete"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:tint="@color/colorPrimary" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:id="@+id/show_emr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="50dp"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stackFromBottom="true"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="3dp">
         <TextView
             android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-    <Spinner
-        android:id="@+id/messageListView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_above="@+id/linearLayout"
-        android:divider="@android:color/transparent"
-        android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/item_message"/>
+            android:textSize="16dp"
+            android:paddingTop="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/black"
+            android:text="@string/driverID"/>
+        <EditText
+            android:id="@+id/id"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:enabled="false"
+            android:textSize="16dp"
+          />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_margin="3dp">
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:textSize="16dp"
+              android:paddingTop="10dp"
+              android:textColor="@android:color/black"
+              android:text="@string/driver"/>
+          <EditText
+              android:id="@+id/name"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:textSize="16dp"
+              android:enabled="false"
+              android:textColor="@android:color/black"
+              android:layout_weight="1.5"/>
+          <ImageView
+              android:id="@+id/phone"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:paddingTop="5dp"
+              android:layout_weight="0.25"
+              android:src="@drawable/ic_call"/>
+      </LinearLayout>
+       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal">
-
-
+        android:orientation="horizontal"
+           android:layout_margin="3dp">
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:textSize="16dp"
+               android:paddingTop="10dp"
+               android:textColor="@android:color/black"
+               android:text="@string/bus_num"/>
         <EditText
-            android:id="@+id/messageEditText"
+            android:id="@+id/bus_id"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:enabled="false"
+            android:textColor="@android:color/black"
+            android:layout_weight="2"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
-
+            android:orientation="horizontal"
+            android:layout_margin="3dp">
+            <TextView
+                android:text="@string/plate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="16dp"
+                android:paddingTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/plate"
+                android:layout_width="0dp"
+                android:textSize="16dp"
+               android:enabled="false"
+                android:textColor="@android:color/black"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"/>
+            <ImageView
+                android:id="@+id/b_map"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_action_location"/>
+        </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           <TextView
+               android:text="@string/EmergencyMessage"
+               android:textSize="16dp"
+               android:paddingTop="10dp"
+               android:layout_marginRight="10dp"
+               android:textColor="@android:color/black"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <EditText
+               android:id="@+id/sho_mass"
+               android:lines="4"
+               android:enabled="false"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textColor="@android:color/black" />
+       </LinearLayout>
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/emr"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="70dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/emergency_a"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"/>
+        <EditText
+            android:id="@+id/mass"
+            android:lines="4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/edit_height"
+            android:layout_marginTop="@dimen/dimension_of_the_limbs_log"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/send"
+            android:textColor="@color/colorButtonText"
+            android:background="@drawable/button_st"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            />
+    </LinearLayout>
 </RelativeLayout>

@@ -12,4 +12,5 @@
     <color name="green">#3CB371</color>
     <color name="card">#ffce76</color>
     <color name="button">#FBAE42</color>
+    <color name="wrong">#b62020</color>
 </resources>

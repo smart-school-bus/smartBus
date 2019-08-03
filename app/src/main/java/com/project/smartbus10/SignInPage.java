@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class SignInPage extends AppCompatActivity {
     public static int RC_SIGN_IN = 0;
@@ -74,7 +76,7 @@ public class SignInPage extends AppCompatActivity {
 
 
     }
-    //Choose the input method using the userName or ID
+    //Choose the input method using the  ID
     private void CheckTheLoginMethod(String ID,String password) {
         ID=ID.trim();//Delete the spaces from the userName
         password=password.trim();//Delete the spaces from the password
@@ -92,8 +94,6 @@ public class SignInPage extends AppCompatActivity {
             Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
         }
     }
-
-
     // sign In using your ID
     private void signIn(final String path , final String ID, final String password) {
         mDatabaseReference.child(path).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,32 +101,25 @@ public class SignInPage extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()) {
                     if(ID.equals((String) mDataSnapshot.getKey())){//UserName verification
-                        if(password.equals((String) mDataSnapshot.child("password").getValue())){// Password verification
+                        if((password.hashCode()+"").equals((String) mDataSnapshot.child("password").getValue())){// Password verification
                             openHomeActivity(path,mDataSnapshot);// open Home page
+                            String token = FirebaseInstanceId.getInstance().getToken();
+                            mDatabaseReference.child(path).child(ID).child("token").setValue(token);
+                            Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
                             RC_SIGN_IN=1;
-                            break;
-                        }
+                            break; }
                         else{  // error in password
                             progressBar.dismiss();
-                            Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
+                            Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show(); } } }
                 if (RC_SIGN_IN==0){//Do not log in due to an error in the ID
                     progressBar.dismiss();
-                    Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
+                    Toast.makeText(SignInPage.this, R.string.error_incorrect_input, Toast.LENGTH_SHORT).show(); } }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 if(databaseError!=null){
                     progressBar.dismiss();
-                    Toast.makeText(SignInPage.this, R.string.error_database, Toast.LENGTH_SHORT).show();}
-
-            }
+                    Toast.makeText(SignInPage.this, R.string.error_database, Toast.LENGTH_SHORT).show();} }
         });
     }
 
@@ -163,6 +156,7 @@ public class SignInPage extends AppCompatActivity {
                 sp.edit().putString("ID",admin.getAdminID()).apply();
                 sp.edit().putString("Name",admin.getFirstName()+" "+admin.getLastName()).apply();
                 sp.edit().putString("user_type","SchoolAdministration").apply();
+                sp.edit().putInt("image",R.drawable.parent_).apply();
                 break;
             case  "Parent":
                 Parent parent=mDataSnapshot.getValue(Parent.class);
@@ -170,6 +164,8 @@ public class SignInPage extends AppCompatActivity {
                 sp.edit().putString("ID",parent.getPatentID()).apply();
                 sp.edit().putString("Name",parent.getFirstName()+" "+parent.getLastName()).apply();
                 sp.edit().putString("user_type","Parent").apply();
+                sp.edit().putInt("image",R.drawable.parent_).apply();
+
                 break;
             case "Driver":
                 Driver driver=mDataSnapshot.getValue(Driver.class);
@@ -177,6 +173,7 @@ public class SignInPage extends AppCompatActivity {
                 sp.edit().putString("ID",driver.getDriverID()).apply();
                 sp.edit().putString("Name",driver.getFirstName()+" "+driver.getLastName()).apply();
                 sp.edit().putString("user_type","Driver").apply();
+                sp.edit().putInt("image",R.drawable.driverp).apply();
                 break;
         }
         progressBar.dismiss();
@@ -197,12 +194,13 @@ public class SignInPage extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public void onBackPressed() {
             finishAffinity();
             super.onBackPressed();
 
-        }
+    }
 }
 
 

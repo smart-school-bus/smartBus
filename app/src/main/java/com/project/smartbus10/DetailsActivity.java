@@ -48,6 +48,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Student student;
     private SchoolAdministration admin;
     private Parent parent;
+    private String busPage;
 
     //
     private Toolbar mToolbar;
@@ -91,7 +92,8 @@ public class DetailsActivity extends AppCompatActivity {
         listType = (String) i.getSerializableExtra("ListType");
         idItem = (String) i.getSerializableExtra("idItem");
         profile = (String) i.getSerializableExtra("Profile");
-
+        if(i.getSerializableExtra("busPage")!=null){busPage=(String) i.getSerializableExtra("busPage");}
+        Log.d("ADebugTag","d"+listType);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child(listType);
         mDatabaseReference2 = mFirebaseDatabase.getReference();
@@ -124,6 +126,7 @@ public class DetailsActivity extends AppCompatActivity {
         delete = (ImageButton) findViewById(R.id.delete);
         edit= findViewById(R.id.edit_b);
         getInfo();
+        Log.d("ADebugTag", "Value: " + listType);
 
         //
         if (sp.getString("user_type", "").equals("SchoolAdministration") && profile == null) {
@@ -138,7 +141,6 @@ public class DetailsActivity extends AppCompatActivity {
                                 @SuppressLint("NewApi")
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (listType.equals("Parent")) {
-                                        Log.d("ADebugTag", "Value: " + listType);
                                         AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this);
                                         builder.setMessage(R.string.pdelete_mas);
                                         builder.setPositiveButton("yes",
@@ -256,11 +258,25 @@ public class DetailsActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (profile == null) {
+                if (profile == null&&busPage==null&&!sp.getString("user_type","").equals("Parent")) {
+                    Log.d("ADebugTag", "Value: parent " +parentId);
                     Intent goToListPage = new Intent(DetailsActivity.this, ItemList.class);
                     goToListPage.putExtra("ListType", listType);
                     startActivity(goToListPage);
-                } else {
+                }else if(busPage!=null){
+                    Intent goToBusPage = new Intent(DetailsActivity.this, BusDetailsActivity.class);
+                    goToBusPage.putExtra("busId", busPage);
+                    startActivity(goToBusPage);
+                }else if((sp.getString("user_type","").equals("Parent"))&&listType.equals("Student")){
+                    Log.d("ADebugTag", "Value: parent " +parentId);
+
+                        Intent goToDetailsActivity = new Intent(DetailsActivity.this, ItemList.class);
+                        goToDetailsActivity.putExtra("ListType","Student");
+                        goToDetailsActivity.putExtra("parentId",sp.getString("ID",""));
+                        startActivity(goToDetailsActivity);
+
+                }
+                else {
                     Intent goToHomePage = new Intent(DetailsActivity.this, Home.class);
                     startActivity(goToHomePage);
                 }
@@ -289,7 +305,7 @@ public class DetailsActivity extends AppCompatActivity {
                         student.setBus(new Bus());
                         student.getBus().setID(dataSnapshot.child("busID").getValue().toString());
                         student.setBusStop(new BusStop());
-                        student.getBusStop().setBusStopID(dataSnapshot.child("busID").getValue().toString());
+                        student.getBusStop().setBusStopID(dataSnapshot.child("busStopID").getValue().toString());
                         String parentId = dataSnapshot.child("parentID").getValue().toString();
                         getParentPhone(parentId);
 
@@ -323,28 +339,7 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
     }
-    //
-    private void getStStatusInfo() {
-        Query fireQuery = mDatabaseReference2.child("StudentTimeNote").orderByChild("studentID").equalTo(student.getStuID());
-        fireQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                    for (DataSnapshot mDataSnapshot : dataSnapshot.getChildren()) {
-                        StudentTimeNote stuNot = (mDataSnapshot.getValue(StudentTimeNote.class));
-                        studentDetails(stuNot);
-                    }
-                } else studentDetails(null);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
     //
     public void getBusID(final Driver driver) {
         Query fireQuery = mDatabaseReference2.child("Bus").orderByChild("driverID").equalTo(driver.getDriverID());
@@ -376,9 +371,9 @@ public class DetailsActivity extends AppCompatActivity {
 
                     parent = dataSnapshot.getValue(Parent.class);
                     parent.setPatentID(parentID);
-                    getStStatusInfo();
+                    studentDetails();
                 } else
-                    getStStatusInfo();
+                    studentDetails();
             }
 
             @Override
@@ -391,18 +386,26 @@ public class DetailsActivity extends AppCompatActivity {
     private void adminDetails(SchoolAdministration admin) {
         if (admin != null) {
             name.setText(admin.getFirstName() + " " + admin.getLastName());
-            fullName.setText(admin.getFirstName() + " " + admin.getSecondName() + " " + admin.getLastName());
-
+            name.setTextSize(20);
+            id.setTextSize(16);
+            TextView name_text_view=findViewById(R.id.name_text_view);
+            name_text_view.setVisibility(View.INVISIBLE);
+            fullName.setVisibility(View.GONE);
             id.setText(admin.getAdminID());
-            tagText.setText(R.string.ph);
-            tag.setText(admin.getPhone());
-            parentIdText.setText(R.string.pas);
-            parentId.setText(admin.getPassword().replaceAll("^[a-zA-Z0-9_.-]*$", "******"));
+            tagText.setText(R.string.name);
+            tagText.setTextSize(18);
+            tagText.setTextSize(18);
+            tag.setText(admin.getFirstName() + " " + admin.getSecondName() + " " + admin.getLastName());
+            parentIdText.setTextSize(18);
+            parentId.setTextSize(18);
+            parentIdText.setText(R.string.ph);
+            parentId.setText(admin.getPhone());
             Log.d("ADebugTag", "" + parentId.getMarqueeRepeatLimit());
             showMap.setVisibility(View.GONE);
-            phoneText.setVisibility(View.GONE);
-            phone.setVisibility(View.GONE);
-            busIdText.setVisibility(View.GONE);
+            phoneText.setVisibility(View.VISIBLE);
+            phoneText.setText(R.string.pas);
+            phone.setText((admin.getPassword().replaceAll("^[a-zA-Z0-9_.-]*$", "******")));
+            busIdText.setVisibility(View.INVISIBLE);
             busId.setVisibility(View.GONE);
             busStopId.setVisibility(View.GONE);
             busStopIdText.setVisibility(View.GONE);
@@ -425,12 +428,12 @@ public class DetailsActivity extends AppCompatActivity {
     }
     //
     @SuppressLint("ResourceAsColor")
-   public void studentDetails(StudentTimeNote stuNot) {
+   public void studentDetails( ) {
         if (student != null) {
             name.setText(student.getFirstName() + " " + student.getLastName());
             fullName.setTextSize(12);
             id.setText(student.getStuID());
-            tag.setText(student.getTag());
+            tag.setText("           "+student.getTag());
             busId.setText(student.getBus().toString());
             busStopId.setText(student.getBusStop().toString());
             level.setText(student.getLevel());
@@ -452,10 +455,11 @@ public class DetailsActivity extends AppCompatActivity {
                 parentId.setText(parent.getPatentID());
                 phone.setText(parent.getPhone());
             } else fullName.setText(student.getFirstName() + " " + student.getLastName());
-            if (stuNot != null) {
-                state.setText(stuNot.getState());
-                history.setText(stuNot.toString());
-            }
+            if (student.getState().equals("out")) {
+                state.setText("out");
+                history.setText(student.toString());
+            }else state.setText("on");
+            history.setText(student.toString());
             progressBar.dismiss();
 
         } else {
@@ -653,5 +657,29 @@ public class DetailsActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+    @Override
+    public void onBackPressed() {
+        if (profile == null&&busPage==null&&!sp.getString("user_type","").equals("Parent")) {
+            Intent goToListPage = new Intent(DetailsActivity.this, ItemList.class);
+            goToListPage.putExtra("ListType", listType);
+            startActivity(goToListPage);
+        } else if(busPage!=null){
+            Intent goToBusPage = new Intent(DetailsActivity.this, BusDetailsActivity.class);
+            goToBusPage.putExtra("busId", busPage);
+            startActivity(goToBusPage);
+        }else if(sp.getString("user_type","").equals("Parent")&&listType.equals("Student")){
+
+            Intent goToDetailsActivity = new Intent(DetailsActivity.this, ItemList.class);
+            goToDetailsActivity.putExtra("ListType","Student");
+            goToDetailsActivity.putExtra("parentId",sp.getString("ID",""));
+            startActivity(goToDetailsActivity);
+
+        }
+        else {
+            Intent goToHomePage = new Intent(DetailsActivity.this, Home.class);
+            startActivity(goToHomePage);
+        } finish();
+        super.onBackPressed();
     }
 }

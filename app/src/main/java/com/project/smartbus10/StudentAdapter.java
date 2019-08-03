@@ -34,15 +34,25 @@ public class StudentAdapter extends ArrayAdapter<Student> {
 
         Student student = getItem(position);
         image.setImageResource(R.drawable.student_);
+
         nameText.setText(student.getFirstName()+" "+student.getLastName());
         if(student.getStuAttendance()==false){
-            layout.setBackgroundColor(R.color.colorAccent);
-        }if(student.getNot()==null){
-            state.setImageResource(R.drawable.off);
-            text.setText("off Bus");
-        }else if(student.getNot().getState().equals("off")){
-            state.setImageResource(R.drawable.off);
-            text.setText("off Bus");
+          layout.setBackgroundResource(R.color.colorHint);
+
+
+        }else if(student.getState().equals("wrong")){
+            layout.setBackgroundResource(R.color.wrong);
+        }
+        else {
+            layout.setBackgroundResource(R.color.colorButtonText);
+        }
+         if(student.getState().equals("out")||(student.getState().equals("Wrong"))){
+            state.setImageResource(R.drawable.ic_stop);
+            text.setText("out Bus");
+        }else if(student.getState().equals("on")){
+            state.setImageResource(R.drawable.ic_action_playback_stop);
+            text.setText("on Bus");
+
         }
 
 

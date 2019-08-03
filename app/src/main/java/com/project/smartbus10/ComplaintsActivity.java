@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +39,7 @@ public class ComplaintsActivity extends AppCompatActivity {
     private TextView text1;
     private TextView text2;
     private Button addcomplaintsB;
+    private ImageButton delete;
     private ProgressDialog progressBar;
     private Intent i;
 
@@ -61,7 +62,9 @@ public class ComplaintsActivity extends AppCompatActivity {
         text1 = findViewById(R.id.busIDT);
         text2 = findViewById(R.id.parentNameText);
         description = findViewById(R.id.com);
+        delete=findViewById(R.id.delete);
         addcomplaintsB = findViewById(R.id.addcomplains);
+        progressBar.show();
         if (sp.getString("user_type", "").equals("SchoolAdministration")) {
             addcomplaintsB.setVisibility(View.GONE);
             parentName.setVisibility(View.VISIBLE);
@@ -69,7 +72,9 @@ public class ComplaintsActivity extends AppCompatActivity {
             text1.setText(R.string.driverN);
             description.setEnabled(false);
             busID.setEnabled(false);
-            progressBar.show();
+            text2.setEnabled(false);
+            parentName.setEnabled(false);
+            delete.setVisibility(View.VISIBLE);
             i = getIntent();
             String complaintID = (String) i.getSerializableExtra("ComplaintsID");
             try {
@@ -82,10 +87,11 @@ public class ComplaintsActivity extends AppCompatActivity {
 
 
         } else if (sp.getString("user_type", "").equals("Parent")) {
+            delete.setVisibility(View.GONE);
             addcomplaintsB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    progressBar.show();
+
                     if (verifyInput(busID, description)) {
                         try {
                             complaints.setDescription(description.getText().toString());
@@ -113,19 +119,49 @@ public class ComplaintsActivity extends AppCompatActivity {
                  }
              }
          });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.show();
+                mDatabaseReference.child("Complaints").child((String) i.getSerializableExtra("ComplaintsID")).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            dataSnapshot.getRef().removeValue();
+                            Intent goToItemListPage=new Intent(ComplaintsActivity.this, ItemList.class);
+                            goToItemListPage.putExtra("ListType","Complaints");
+                            startActivity(goToItemListPage);
+                            progressBar.dismiss();
+                        } else {  // error in password
+                            progressBar.dismiss();
+                            Toast.makeText(ComplaintsActivity.this, R.string.error_database, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }});
 
 
-
-    }
+    }}); progressBar.dismiss();}
 
     private void showComplaints() {
         text1.setText(R.string.driverN);
         text2.setText(R.string.parentN);
         description.setText(complaints.getDescription());
-        parentName.setText(complaints.getParent().getFirstName()+ " "+complaints.getParent().getLastName());
-        busID.setText(complaints.getDriver().getFirstName() + " " + complaints.getDriver().getLastName());
+        if(complaints.getParent()!=null)
+        {parentName.setText(complaints.getParent().getFirstName()+ " "+complaints.getParent().getLastName());}
+        else
+            parentName.setText("");
+        if(complaints.getDriver()!=null)
+        { busID.setText(complaints.getDriver().getFirstName() + " " + complaints.getDriver().getLastName());}
+        else
+            busID.setText( " " );
         progressBar.dismiss();
     }
+
 
     private void addComplaints() {
         final String id=mDatabaseReference.child("Complaints").push().getKey().toString();
@@ -146,6 +182,9 @@ public class ComplaintsActivity extends AppCompatActivity {
         progressBar.dismiss();
     }
 
+
+
+
     private void getDriverID() {
         mDatabaseReference2.child("Bus").child(busID.getText().toString().trim()).child("driverID").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -153,7 +192,6 @@ public class ComplaintsActivity extends AppCompatActivity {
                 if (dataSnapshot.getValue() != null) {
                     driverID =dataSnapshot.getValue().toString();
                     addComplaints();
-                    Log.d("ADebugTag1", busID.getText().toString().trim());
                 } else {
                     complaints.setDriver(null);
                     busID.setError(getString(R.string.errorbus));
@@ -174,10 +212,9 @@ public class ComplaintsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     complaints.setDriver(dataSnapshot.getValue(Driver.class));
-                    Log.d("ADebugTag1", busID.getText().toString().trim());
                     showComplaints();
                 } else {
-                    Toast.makeText(ComplaintsActivity.this, R.string.comp_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ComplaintsActivity.this, "Driver account deleted", Toast.LENGTH_SHORT).show();
                     showComplaints();
                 }
             }
@@ -197,7 +234,7 @@ public class ComplaintsActivity extends AppCompatActivity {
                 complaints.setParent(dataSnapshot.getValue(Parent.class));
                    getDriverInfo();}
                    else{
-                    Toast.makeText(ComplaintsActivity.this, R.string.comp_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ComplaintsActivity.this,"Parent  account deleted", Toast.LENGTH_SHORT).show();
                     getDriverInfo();
                 }
 
@@ -220,7 +257,6 @@ public class ComplaintsActivity extends AppCompatActivity {
                         complaints.setDescription(dataSnapshot.child("description").getValue().toString());
                         driverID =dataSnapshot.child("driverID").getValue().toString();
                         parentID =dataSnapshot.child("parentID").getValue().toString();
-                        Log.d("ADebugTag1", dataSnapshot.child("driverID").getValue().toString());
                       getParentInfo();}
                    else
                    { Toast.makeText(ComplaintsActivity.this, R.string.comp_mass, Toast.LENGTH_SHORT).show();

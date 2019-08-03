@@ -15,12 +15,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ItemAdapter extends ArrayAdapter<Item> {
     private SharedPreferences sp;
     Context context;
+
     public ItemAdapter(@NonNull Context context, int resource, List<Item> items) {
         super(context, resource, items);
-        this.context=context;
+        this.context = context;
+        sp = context.getSharedPreferences("SignIn", MODE_PRIVATE);
 
 
     }
@@ -54,12 +58,18 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Uri number = Uri.parse("tel:" + item.getPhone());
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-                    getContext().startActivity(callIntent);
+                    try {
+                        Uri number = Uri.parse("tel:" + item.getPhone());
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                        getContext().startActivity(callIntent);
+                    } catch (Exception e) {
+                    }
 
                 }
             });
+        }
+        if (sp.getString("user_type", "").equals("Parent")) {
+            phone.setVisibility(View.GONE);
         }
 
 
@@ -68,16 +78,17 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             @Override
             public void onClick(View view) {
 
-                String listType="";
-                Intent goToEditPage = new Intent( context, Registration.class);
-                if( item.getID().contains("S")){
-                    listType="Student";
-                }else if(item.getID().contains("A")){
-                    listType="SchoolAdministration";
-                }else if(item.getID().contains("D"))
-                {listType="Driver";}
-                else if(item.getID().contains("P"))
-                {listType="Parent";}
+                String listType = "";
+                Intent goToEditPage = new Intent(context, Registration.class);
+                if (item.getID().contains("S")) {
+                    listType = "Student";
+                } else if (item.getID().contains("A")) {
+                    listType = "SchoolAdministration";
+                } else if (item.getID().contains("D")) {
+                    listType = "Driver";
+                } else if (item.getID().contains("P")) {
+                    listType = "Parent";
+                }
                 goToEditPage.putExtra("ListType", listType);
                 goToEditPage.putExtra("idItem", item.getID());
                 context.startActivity(goToEditPage);

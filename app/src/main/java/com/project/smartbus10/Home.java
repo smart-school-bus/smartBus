@@ -12,13 +12,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     private SharedPreferences sp;
+
     private TextView ID,fullName;
+    private ImageView profileImage;
+
 
     private static final int PERMISSIONS_REQUEST = 1;
     @Override
@@ -26,6 +34,8 @@ public class Home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         sp = getSharedPreferences("SignIn",MODE_PRIVATE);
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child(sp.getString("user_type","")).child(sp.getString("ID","")).child("token");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //
@@ -55,6 +65,8 @@ public class Home extends AppCompatActivity
         ID.setText(sp.getString("ID",""));
         fullName=(TextView)hView.findViewById(R.id.full_name2);
         fullName.setText(sp.getString("Name",""));
+        profileImage=hView.findViewById(R.id.imageView);
+        profileImage.setImageResource(sp.getInt("image",0));
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -88,15 +100,15 @@ public class Home extends AppCompatActivity
             goToProfilePage.putExtra("idItem",sp.getString("ID",""));
             goToProfilePage.putExtra("Profile","Profile");
             startActivity(goToProfilePage);
-        } else if (id == R.id.nav_setting) {
-
-        } else if (id == R.id.nav_logout) {
+        }  else if (id == R.id.nav_logout) {
             Intent serviceIntent = new Intent(Home.this, TrackingService.class);
             sp.edit().clear().commit();
             sp.edit().putBoolean("login",false).apply();
             sp.edit().putString("ID","").apply();
             sp.edit().putString("Name","").apply();
             sp.edit().putString("user_type","").apply();
+            sp.edit().putInt("image",0).apply();
+            removeToken();
             SignInPage.RC_SIGN_IN=0;
             stopService(serviceIntent);
             finish();
@@ -109,4 +121,8 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void removeToken(){
+        mDatabaseReference.setValue("").isSuccessful();
+    }
+
 }

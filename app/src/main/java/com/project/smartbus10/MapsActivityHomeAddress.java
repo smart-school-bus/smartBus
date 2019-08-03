@@ -20,12 +20,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivityHomeAddress extends FragmentActivity implements OnMapReadyCallback {
@@ -50,6 +51,8 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_location);
         createMarker = true;
+        geocoder = new Geocoder(getApplicationContext());
+
         Intent i = getIntent();
         if ((i.getSerializableExtra("latitude") != null && i.getSerializableExtra("longitude") != null)) {
             latitude = (double) i.getSerializableExtra("latitude");
@@ -66,67 +69,35 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
 
         }
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(latitude == 0 && longitude == 0 && homeAddress == null){
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                             {Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
-        }
+        }}
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (latitude == 0 && longitude == 0 && homeAddress == null) {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 16.0f));
+                    // marker = mMap.addMarker(new MarkerOptions().position(new LatLng(21.440939,39.810638)));
+                    mMap.setMaxZoomPreference(20);
                 }
                 //get the location name from latitude and longitude
-                geocoder = new Geocoder(getApplicationContext());
+               // geocoder = new Geocoder(getApplicationContext());
 
 
-                try {
-                    if (homeAddress != null && latitude == 0 && longitude == 0) {
-                        addresses = geocoder.getFromLocationName(homeAddress, 1);
-                        if (addresses.size() >= 1) {
-                            latitude = addresses.get(0).getLatitude();
-                            longitude = addresses.get(0).getLongitude();
-                            Log.d("geoLocate", "3" + latitude);
-                            Log.d("geoLocate", "4" + longitude);
-                        } else {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        }
-                    } else {
-                        addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        Log.d("geoLocate", "geoLocate: 5");
-                    }
-
-                    //String result = addresses.get(0).getLocality()+":";
-                    // result += addresses.get(0).getCountryName();
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    if (marker != null) {
-                        marker.remove();
-                        homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Home"));
-                        mMap.setMaxZoomPreference(20);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-                    } else {
-                        homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);
-                        marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Home"));
-                        mMap.setMaxZoomPreference(20);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18F));
-                    }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
@@ -141,33 +112,24 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
 
             @Override
             public void onProviderDisabled(String provider) {
+                if(latitude==0&&homeAddress==null)
+
+                { mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21.440939,39.810638), 16.0f));
+                mMap.setMaxZoomPreference(20);}
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+          try {
+              locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+              locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+          }catch (Exception e){
+              e.printStackTrace();
+          }
+
 
 
     }
 
-    private void geoLocate() {
-        Log.d("geoLocate", "geoLocate: geolocating");
-
-
-        Geocoder geocoder = new Geocoder(MapsActivityHomeAddress.this);
-        List<Address> list = new ArrayList<>();
-        try {
-            list = geocoder.getFromLocationName(homeAddress, 1);
-        } catch (IOException e) {
-        }
-
-        if (list.size() > 0) {
-            Address address = list.get(0);
-            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(address.getLatitude(), address.getLongitude()), 18F));
-
-        }
-    }
 
     /**
      * Manipulates the map once available.
@@ -180,7 +142,11 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.home_icon);
         mMap = googleMap;
+        if(latitude!=0||homeAddress!=null)
+        {getHomeLocation();}
         //select location
         if (createMarker) {
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -193,11 +159,12 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);
+                    if(addresses!=null&&addresses.size()>0)
+                    {homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);}
                     Toast.makeText(MapsActivityHomeAddress.this, "" + latitude + longitude, Toast.LENGTH_SHORT).show();
                     //  LatLng addess = new LatLng(latitude ,  longitude);
                     mMap.clear();
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title("home"));
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title("home").icon(icon));
 
                 }
             });
@@ -213,10 +180,50 @@ public class MapsActivityHomeAddress extends FragmentActivity implements OnMapRe
         super.onStop();
         locationManager.removeUpdates(locationListener);
     }
+    private void getHomeLocation(){
+        final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.home_icon);
+
+        try {
+            if (homeAddress != null && latitude == 0 && longitude == 0) {
+                addresses = geocoder.getFromLocationName(homeAddress, 1);
+                if (addresses.size() >= 1) {
+                    latitude = addresses.get(0).getLatitude();
+                    longitude = addresses.get(0).getLongitude();
+                    Log.d("geoLocate", "3" + latitude);
+                    Log.d("geoLocate", "4" + longitude);
+                }
+            } else {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                Log.d("geoLocate", "geoLocate: 5");
+            }
+
+            LatLng latLng = new LatLng(latitude, longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17.0f));
+
+            if (marker != null) {
+                marker.remove();
+                if(addresses.size()>0){
+                homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);}
+                marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Home").icon(icon));
+                mMap.setMaxZoomPreference(20);
+
+
+            } else {
+                if(addresses.size()>0){
+                homeAddress = addresses.get(0).getFeatureName() + "," + addresses.get(0).getAddressLine(0);}
+                //  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17F));
+                marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Home").icon(icon));
+                mMap.setMaxZoomPreference(20);
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace(); }
+    }
 
     @Override
     public void onBackPressed() {
-        if (createMarker) {
+        if (createMarker&&marker!=null) {
             new AlertDialog.Builder(this)
                     .setTitle("Really Exit?")
                     .setMessage("Do you want to save the location ?")
